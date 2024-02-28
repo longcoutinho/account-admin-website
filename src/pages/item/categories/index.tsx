@@ -11,22 +11,11 @@ import AllItem from "@/components/item/all/AllItem";
 
 export default function Categories() {
     const [itemLevel1, setItemLevel1] = useState<number | null>(null);
-    const [itemLevel2, setItemLevel2] = useState<number | null>(null);
-
-    const changeParentChooseItemId = (itemId: number, level: number) => {
-        if (level == 1) {
-            setItemLevel1(itemId);
-        }
-        else if (level == 2) {
-            setItemLevel2(itemId);
-        }
-    }
 
     return (
         <Page title={PAGE_TITLE.HOME} menuIndex={1}>
-            <ItemTypeComponent editable={true} display={true} level={1} parentId={null} changeParentChooseItemId={changeParentChooseItemId}></ItemTypeComponent>
-            <ItemTypeComponent editable={true} display={true} level={2} parentId={itemLevel1} changeParentChooseItemId={changeParentChooseItemId}></ItemTypeComponent>
-            <AllItem lv1Id={itemLevel1} lv2Id={itemLevel2}></AllItem>
+            <ItemTypeComponent editable={true} display={true} level={1} parentId={null}></ItemTypeComponent>
+            <AllItem lv1Id={itemLevel1}></AllItem>
         </Page>
     );
 }

@@ -2,22 +2,26 @@ import {faCartShopping, faCoins} from "@fortawesome/free-solid-svg-icons";
 export const menuBar =
     [
         {
-            title: "Mua",
+            title: "Quản lý sản phẩm",
             icon: faCartShopping,
             child: [
                 {
-                    title: "Tài khoản",
-                    url: "/buy"
+                    title: "Loại sản phẩm",
+                    url: "/item/categories"
+                },
+                {
+                    title: "Thêm sản phẩm",
+                    url: "/item/add"
                 },
             ]
         },
         {
-            title: "Nạp tiền",
+            title: "Quản lý khách hàng",
             icon: faCoins,
             child: [
                 {
-                    title: "Nạp tiền",
-                    url: "/topup"
+                    title: "Yêu cầu nạp tiền",
+                    url: "/customer/top-up-list"
                 },
             ]
         },

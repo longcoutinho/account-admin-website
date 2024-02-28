@@ -16,6 +16,10 @@ export default function AddItemComponent() {
     const [itemPrice, setItemPrice] = useState('');
     const [itemListImages, setItemListImages] = useState<FileList>();
 
+    const changeTypeId = (typeId: any) => {
+        setTypeId(typeId);
+    }
+
     const createItem = () => {
         const request = new FormData();
         request.append('price', itemPrice);
@@ -45,7 +49,7 @@ export default function AddItemComponent() {
                        onChange={(e) => setItemName(e.target.value)}/>
             </Box>
             <Box>
-                <ItemTypeComponent></ItemTypeComponent>
+                <ItemTypeComponent changeTypeId = {changeTypeId}></ItemTypeComponent>
             </Box>
             <Box>
                 <p className="label">Item Image</p>
