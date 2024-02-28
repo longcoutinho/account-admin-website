@@ -1,0 +1,42 @@
+.profile-page-container {
+  background-color: rgb(242,242,242);
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .profile-page-wrapper {
+    width: 70%;
+    border-radius: 30px;
+    background-color: white;
+    padding: 20px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .name-and-email-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      p:first-child {
+        font-size: 30px;
+      }
+      p {
+        color: black;
+      }
+    }
+    .user-info-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      .profile-user-info-element {
+        width: 50%;
+        padding: 20px;
+        p {
+          color: black;
+        }
+      }
+    }
+  }
+}
