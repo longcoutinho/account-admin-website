@@ -1,9 +1,9 @@
 $black-color: #141517;
-$gray-color: rgb(160,167,179);
-@import '../responsive.scss';
+$gray-color: rgb(160, 167, 179);
+@import "../responsive.scss";
 .header-container {
   width: 100%;
-  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
   .header-wrapper {
     display: flex;
     flex-direction: row;
@@ -38,7 +38,7 @@ $gray-color: rgb(160,167,179);
           position: absolute;
           background-color: #f9f9f9;
           min-width: 120px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
           padding: 0;
           z-index: 100;
           border-radius: 15px;
@@ -47,36 +47,36 @@ $gray-color: rgb(160,167,179);
           font-size: 30px;
           flex-direction: column;
           align-items: center;
-            .user-info-element {
-              width: 100%;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: center;
-              padding: 4px 0;
-              a {
-                text-transform: capitalize;
-                color: black;
-                text-decoration: none;
-                font-size: 14px;
-                font-weight: 500;
-              }
-              a:hover {
-                color: red;
-              }
-              p {
-                color: black;
-                font-size: 14px;
-                font-weight: 500;
-              }
+          .user-info-element {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 0;
+            a {
+              text-transform: capitalize;
+              color: black;
+              text-decoration: none;
+              font-size: 14px;
+              font-weight: 500;
             }
-            .user-info-element:hover {
-              cursor: pointer;
-              background-color: rgb(240, 240, 240);
-            }
-            .user-info-element:hover p {
+            a:hover {
               color: red;
             }
+            p {
+              color: black;
+              font-size: 14px;
+              font-weight: 500;
+            }
+          }
+          .user-info-element:hover {
+            cursor: pointer;
+            background-color: rgb(240, 240, 240);
+          }
+          .user-info-element:hover p {
+            color: red;
+          }
         }
       }
       .user-icon-wrapper:hover .user-info-hover-container {
@@ -117,7 +117,7 @@ $gray-color: rgb(160,167,179);
   a {
     font-size: 16px;
     text-transform: capitalize;
-    color: #CEBD9C !important;
+    color: #cebd9c !important;
     text-decoration: none;
     font-weight: 500;
   }
@@ -125,7 +125,7 @@ $gray-color: rgb(160,167,179);
 
 .shop-now-wrapper {
   margin-left: 5px;
-  border-bottom: 2px solid #CEBD9C;
+  border-bottom: 2px solid #cebd9c;
 }
 
 .hori-header-container {
@@ -134,10 +134,10 @@ $gray-color: rgb(160,167,179);
   align-items: center;
   width: 15%;
   height: 100vh;
-  background-color: rgb(60,75,100);
+  background-color: rgb(60, 75, 100);
   .logo-wrapper {
-    padding: 20px;
-    background-color: rgb(48,60,84);
+    padding: 10px 20px;
+    background-color: rgb(48, 60, 84);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -152,7 +152,7 @@ $gray-color: rgb(160,167,179);
 }
 
 //menu
-.big-menu{
+.big-menu {
   width: 100%;
   height: 100%;
   .menu-element-wrapper {
@@ -198,7 +198,7 @@ $gray-color: rgb(160,167,179);
     }
     .menu-element-content:hover {
       cursor: pointer;
-      background-color: rgb(48,60,84);
+      background-color: rgb(48, 60, 84);
     }
     .menu-element-child-container {
       color: white;
@@ -218,8 +218,7 @@ $gray-color: rgb(160,167,179);
     }
     .menu-element-child-container:hover {
       cursor: pointer;
-      background-color: rgb(48,60,84);
+      background-color: rgb(48, 60, 84);
     }
   }
 }
-
