@@ -2,7 +2,7 @@ import {Course} from "@/interfaces/response";
 import {PATH_PAGE} from "@/routes/path";
 
 export enum Backend {
-  BASE_URL = 'http://localhost:8989',
+  BASE_URL = 'http://58.187.168.147:8989',
   USER_SERVICE = BASE_URL + '/user',
   ITEM_SERVICE = BASE_URL + '/item',
   IMAGE_SERVICE = BASE_URL + '/image',
