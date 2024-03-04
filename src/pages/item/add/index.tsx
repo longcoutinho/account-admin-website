@@ -1,4 +1,4 @@
-import {Box, Button, Input} from "@mui/material";
+import {Box, Button, Input, TextField} from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -17,6 +17,7 @@ export default function AddItemComponent() {
     const [itemListImages, setItemListImages] = useState<FileList>();
 
     const changeTypeId = (typeId: any) => {
+        console.log(typeId);
         setTypeId(typeId);
     }
 
@@ -41,28 +42,26 @@ export default function AddItemComponent() {
         });
     }
 
-    return <Page title={PAGE_TITLE.HOME} menuIndex={1}>
-        <Box>
-            <Box>
-                <p className="label">Item Name</p>
-                <Input type="text"
-                       onChange={(e) => setItemName(e.target.value)}/>
+    return (
+        <Page title={PAGE_TITLE.HOME} menuIndex={1}>
+            <Box className="flex flex-col bg-white rounded-2xl box-shadow p-5 gap-5">
+                <Box className="w-1/2">
+                    <TextField type="small" className="w-full" label="Tên sản phẩm" onChange={(e: any) => setItemName(e.target.value)}></TextField>
+                </Box>
+                <Box>
+                    <ItemTypeComponent changeTypeId = {changeTypeId}></ItemTypeComponent>
+                </Box>
+                <Box>
+                    <p className="label">Item Image</p>
+                    <Input type="file" inputProps={{ multiple: true }} onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                        if (e.target.files != null) setItemListImages(e.target.files);
+                    }}></Input>
+                </Box>
+                <Box>
+                    <TextField type="small" className="w-full" label="Giá sản phẩm" onChange={(e: any) => setItemPrice(e.target.value)}></TextField>
+                </Box>
+                <Button variant="outlined" onClick={createItem}>Add Item</Button>
             </Box>
-            <Box>
-                <ItemTypeComponent changeTypeId = {changeTypeId}></ItemTypeComponent>
-            </Box>
-            <Box>
-                <p className="label">Item Image</p>
-                <Input type="file" inputProps={{ multiple: true }} onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.files != null) setItemListImages(e.target.files);
-                }}></Input>
-            </Box>
-            <Box>
-                <p className="label">Item Price</p>
-                <Input type="text"
-                       onChange={(e) => setItemPrice(e.target.value)}/>
-            </Box>
-            <Button variant="contained" onClick={createItem}>Add Item</Button>
-        </Box>
-    </Page>;
+        </Page>
+    )
 }
