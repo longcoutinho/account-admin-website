@@ -6,7 +6,7 @@ import "swiper/css/scrollbar";
 import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "@/services/userService";
-import { HTTP_STATUS, PageURL } from "@/constants";
+import {Frontend, HTTP_STATUS, PageURL} from "@/constants";
 import { useRouter } from "next/router";
 import { redirectUrl, saveUserToSessionStorage } from "@/constants/FnCommon";
 
@@ -37,7 +37,7 @@ export default function Login() {
           if (res.status == HTTP_STATUS.OK) {
             console.log(res.data);
             saveUserToSessionStorage(res.data);
-            redirectUrl(route, PageURL.HOME, null);
+            redirectUrl(route, '/item/categories', null);
           }
         })
         .catch((err) => {
