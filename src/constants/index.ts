@@ -6,6 +6,7 @@ export enum Backend {
   USER_SERVICE = BASE_URL + '/user',
   ITEM_SERVICE = BASE_URL + '/item',
   IMAGE_SERVICE = BASE_URL + '/image',
+  ACCOUNT_SERVICE = BASE_URL + '/stock-account',
 }
 
 export enum Frontend {
