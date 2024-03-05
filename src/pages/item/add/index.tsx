@@ -46,12 +46,18 @@ export default function AddItemComponent() {
   return (
     <Page title={PAGE_TITLE.HOME} menuIndex={1}>
       <Box className="flex flex-col bg-white rounded-2xl box-shadow p-5 gap-5">
-        <Box className="w-1/2">
+        <Box className="flex gap-5">
           <TextField
             type="small"
             className="w-full"
             label="Tên sản phẩm"
             onChange={(e: any) => setItemName(e.target.value)}
+          ></TextField>
+          <TextField
+            type="small"
+            className="w-full"
+            label="Giá sản phẩm"
+            onChange={(e: any) => setItemPrice(e.target.value)}
           ></TextField>
         </Box>
         <Box>
@@ -67,15 +73,11 @@ export default function AddItemComponent() {
             }}
           ></Input>
         </Box>
-        <Box>
-          <TextField
-            type="small"
-            className="w-full"
-            label="Giá sản phẩm"
-            onChange={(e: any) => setItemPrice(e.target.value)}
-          ></TextField>
-        </Box>
-        <Button variant="outlined" onClick={createItem}>
+        <Button
+          variant="outlined"
+          onClick={createItem}
+          className="bg-blue-500 w-1/6 text-white"
+        >
           Add Item
         </Button>
       </Box>

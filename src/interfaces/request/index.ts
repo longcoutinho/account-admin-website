@@ -13,7 +13,7 @@ export interface Item {
 }
 
 export interface Account {
-  itemId: number;
+  itemId?: number;
   username: string;
   password: string;
 }
