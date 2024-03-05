@@ -2,6 +2,9 @@ export interface ItemType {
   name: string;
   itemTypeId?: number;
   createDate?: number;
+  code?: string;
+  level?: number;
+  parentId?: any;
 }
 
 export interface Item {

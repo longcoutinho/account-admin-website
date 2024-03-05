@@ -14,28 +14,31 @@ export interface Post {
 export interface Item {
   id: number;
   price: number;
-  name : string;
+  name: string;
   lv1Id: number;
   lv2Id: number | null;
   listImageIds: number[];
+  introduction?: string;
+  title?: string;
+  titleImageUrlStream?: string;
 }
 
 export interface Course {
-  title: string,
-  teacher: string,
-  titleImageUrlStream: string,
-  videoTime: number,
+  title: string;
+  teacher: string;
+  titleImageUrlStream: string;
+  videoTime: number;
 }
 
 export interface TypePost {
-  id: string,
-  name: string,
+  id: string;
+  name: string;
 }
 
 export interface Comment {
-  email: string,
-  name: string,
-  content: string,
+  email: string;
+  name: string;
+  content: string;
 }
 
 export interface Service {
@@ -46,11 +49,11 @@ export interface Service {
 }
 
 export interface ItemToCart {
-  titleImageUrlStream:string,
-  id: string,
-  title: string,
-  price: number,
-  amount: number,
-  totalPrice: number,
-  itemId: string,
+  titleImageUrlStream: string;
+  id: string;
+  title: string;
+  price: number;
+  amount: number;
+  totalPrice: number;
+  itemId: string;
 }

@@ -32,12 +32,11 @@ export default function Inventory() {
   useEffect(() => {
     renderListTopUp();
   }, []);
+
   const renderListTopUp = () => {
     getAllTopUpRequest()
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
-          console.log(res);
-
           setList(res.data);
         }
       })
