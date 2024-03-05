@@ -39,7 +39,9 @@ export default function ItemTypeComponent(props: any) {
         onChange={(e) => props.changeTypeId(e.target.value)}
       >
         {listItem.map((itemType) => (
-          <MenuItem value={itemType.itemTypeId}>{itemType.name}</MenuItem>
+          <MenuItem value={itemType.itemTypeId} key={itemType.itemTypeId}>
+            {itemType.name}
+          </MenuItem>
         ))}
       </TextField>
     </Box>
