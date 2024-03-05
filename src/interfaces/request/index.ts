@@ -11,3 +11,8 @@ export interface Item {
   listImages: File;
 }
 
+export interface Account {
+  itemId: number;
+  username: string;
+  password: string;
+}
