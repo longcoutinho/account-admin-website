@@ -9,3 +9,11 @@ export const getAllTopUpRequest = async () : Promise<any> => {
     // }
     return doGetRequest(url, null);
 }
+
+export const confirmTopUpRequest = async (id: string) : Promise<any> => {
+    const url = Backend.TOPUP_SERVICE + '/request';
+    const request = {
+        id: id
+    }
+    return doPostRequest(url, request);
+}
