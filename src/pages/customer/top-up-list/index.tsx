@@ -17,8 +17,9 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { ITopUpList } from "@/interfaces/request";
-import { getAllTopUpRequest } from "@/services/top-up";
+import { confirmTopUpRequest, getAllTopUpRequest } from "@/services/top-up";
 import { TaskAltOutlined } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 export default function Inventory() {
   const [list, setList] = useState<ITopUpList[]>([]);
@@ -51,6 +52,22 @@ export default function Inventory() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleConfirm = async (id: string) => {
+    try {
+      const res = await confirmTopUpRequest(id);
+      if (res.status == HTTP_STATUS.OK) {
+        toast.success(" Thành công");
+        handleClose();
+        renderListTopUp();
+      } else {
+        toast.error("Không thành công");
+      }
+    } catch {
+      toast.error("Không thành công");
+      //
+    }
   };
 
   return (
@@ -111,7 +128,7 @@ export default function Inventory() {
                       <Box className="flex gap-5 px-10 pb-6">
                         <Button
                           className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"
-                          // onClick={handleClick}
+                          onClick={() => handleConfirm(row.id)}
                         >
                           Ok
                         </Button>
