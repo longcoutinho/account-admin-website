@@ -12,14 +12,14 @@ import {
   TableRow,
 } from "@mui/material";
 import { getAccountByItemId } from "@/services/stock-account";
-import ItemTypeComponent from "@/components/item/categories/all/ItemType";
 import dayjs from "dayjs";
 import { IAccountInventory } from "@/interfaces/request";
+import SelectAllItem from "@/components/item/all/SelectAllItem";
 
 export default function Inventory() {
   const [listAccount, setListAccount] = useState<IAccountInventory[]>([]);
 
-  const renderListAccount = (id: string) => {
+  const renderListAccount = (id: number) => {
     getAccountByItemId(String(id))
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
@@ -32,7 +32,7 @@ export default function Inventory() {
   };
   return (
     <Page title={PAGE_TITLE.HOME} menuIndex={1}>
-      <ItemTypeComponent changeTypeId={renderListAccount} />
+      <SelectAllItem changeItem={renderListAccount} />
       {listAccount?.length > 0 ? (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
