@@ -11,3 +11,9 @@ export interface Item {
   lv2Id: number;
   listImages: File;
 }
+
+export interface Account {
+  itemId: number;
+  username: string;
+  password: string;
+}
