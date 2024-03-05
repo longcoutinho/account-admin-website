@@ -12,10 +12,6 @@ export const menuBar = [
         title: "Thêm sản phẩm",
         url: "/item/add",
       },
-      {
-        title: "Nhập kho",
-        url: "/item/inventory",
-      },
     ],
   },
   {
@@ -25,6 +21,20 @@ export const menuBar = [
       {
         title: "Yêu cầu nạp tiền",
         url: "/customer/top-up-list",
+      },
+    ],
+  },
+  {
+    title: "Quản lý kho",
+    icon: faCartShopping,
+    child: [
+      {
+        title: "Nhập kho",
+        url: "/inventory/add",
+      },
+      {
+        title: "Danh sách tài khoản",
+        url: "/inventory/list",
       },
     ],
   },
