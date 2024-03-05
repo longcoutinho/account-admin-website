@@ -27,3 +27,12 @@ export interface IAccountInventory {
   password: string;
   itemId: string;
 }
+
+export interface ITopUpList {
+  id: string;
+  amount: number;
+  status: number;
+  userId: string;
+  createDate: string;
+  method: number;
+}

@@ -1,7 +1,7 @@
 import { HTTP_STATUS, PAGE_TITLE } from "@/constants";
 import Page from "@/layouts";
 import "@/constants/FnCommon";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Table,
@@ -46,9 +46,9 @@ export default function Inventory() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {listAccount.map((row: any) => (
+              {listAccount.map((row: IAccountInventory) => (
                 <TableRow
-                  key={row.name}
+                  key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>{row.itemId}</TableCell>
