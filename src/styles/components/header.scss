@@ -132,9 +132,9 @@ $gray-color: rgb(160, 167, 179);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 15%;
+  width: 20%;
   height: 100vh;
-  background-color: rgb(60, 75, 100);
+  background-color: #3c4b64;
   .logo-wrapper {
     padding: 10px 20px;
     background-color: rgb(48, 60, 84);
@@ -177,11 +177,11 @@ $gray-color: rgb(160, 167, 179);
       align-items: center;
       justify-content: space-between;
       svg:first-child {
-        font-size: 30px;
+        font-size: 20px;
       }
       div {
         width: 80%;
-        margin-left: 20px;
+        margin-left: 12px;
         p {
           text-transform: capitalize;
           color: $gray-color;
@@ -202,7 +202,7 @@ $gray-color: rgb(160, 167, 179);
     }
     .menu-element-child-container {
       color: white;
-      padding: 3px 70px;
+      padding: 3px 50px;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
