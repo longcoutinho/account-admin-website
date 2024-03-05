@@ -41,14 +41,14 @@ export default function Categories() {
     try {
       const res = await createNewItemType({ name: addItem });
       if (res.status === HTTP_STATUS.OK) {
-        toast.success("Add successfully");
+        toast.success("Thêm thành công");
         renderListItem();
         setAddItem("");
       } else {
-        toast.error("Add failed");
+        toast.error("Thêm không thành công");
       }
     } catch {
-      toast.error("Add failed");
+      toast.error("Thêm không thành công");
       //er
     }
   };

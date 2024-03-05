@@ -39,10 +39,10 @@ export default function Inventory() {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Username</TableCell>
-                <TableCell>Password</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Created date</TableCell>
+                <TableCell>Tên</TableCell>
+                <TableCell>Mật khẩu</TableCell>
+                <TableCell>Trạng thái</TableCell>
+                <TableCell>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

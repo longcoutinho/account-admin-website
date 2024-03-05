@@ -20,12 +20,12 @@ export default function Add() {
         password: password || "",
       });
       if (res.status === HTTP_STATUS.OK) {
-        toast.success("Add successfully");
+        toast.success("Thêm thành công");
       } else {
-        toast.error("Add failed");
+        toast.error("Thêm không thành công");
       }
     } catch {
-      toast.error("Add failed");
+      toast.error("Thêm không thành công");
       //er
     }
   };
