@@ -22,6 +22,10 @@ export const menuBar = [
         title: "Yêu cầu nạp tiền",
         url: "/customer/top-up-list",
       },
+      {
+        title: "Thong ke nạp tiền",
+        url: "/customer/top-up-stats",
+      },
     ],
   },
   {
@@ -52,18 +56,18 @@ export const menuBar = [
       },
     ],
   },
-  {
-    title: "Thống kê",
-    icon: faUser,
-    child: [
-      {
-        title: "Nạp tiền",
-        url: "/report/top-up",
-      },
-      {
-        title: "Đơn hàng",
-        url: "/report/sale-order",
-      },
-    ],
-  },
+  // {
+  //   title: "Thống kê",
+  //   icon: faUser,
+  //   child: [
+  //     {
+  //       title: "Nạp tiền",
+  //       url: "/report/top-up",
+  //     },
+  //     {
+  //       title: "Đơn hàng",
+  //       url: "/report/sale-order",
+  //     },
+  //   ],
+  // },
 ];

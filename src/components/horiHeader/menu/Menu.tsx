@@ -13,22 +13,6 @@ export default function Menu() {
   const [displayMatrix, setDisplayMatrix] = useState<number[]>([]);
   const route = useRouter();
 
-  useEffect(() => {
-    let initMatrix = getDisplayMenu();
-    if (initMatrix?.length) {
-      setDisplayMatrix(initMatrix);
-    } else {
-      for (let i = 0; i < menuBar.length; i++) {
-        if (menuBar[i].child == null) {
-          initMatrix[i] = 0;
-        } else {
-          initMatrix[i] = 0;
-        }
-      }
-      setDisplayMatrix(initMatrix);
-    }
-  }, []);
-
   const switchDisplayComponent = (ind: number) => {
     let newMatrix = displayMatrix;
     newMatrix[ind] = 1 - newMatrix[ind];
@@ -50,11 +34,6 @@ export default function Menu() {
         <Box>
           <p>{menuElement.title}</p>
         </Box>
-        <FontAwesomeIcon
-          style={{ display: menuElement.child?.length ? "block" : "none" }}
-          className="angle-down-icon"
-          icon={faAngleDown}
-        ></FontAwesomeIcon>
       </Box>
       {menuElement.child?.map((menuChild, index2) => (
         <Link
@@ -63,7 +42,6 @@ export default function Menu() {
             route.pathname === menuChild.url ? "bg-gray-800" : ""
           }`}
           key={index2}
-          sx={{ display: displayMatrix[index] == 1 ? "flex" : "none" }}
         >
           {menuChild.title}
         </Link>

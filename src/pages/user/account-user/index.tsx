@@ -31,22 +31,6 @@ export default function AccountUser() {
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
 
-    useEffect(() => {
-        renderListTopUp();
-    }, []);
-
-    const renderListTopUp = () => {
-        getAllTopUpRequest()
-            .then((res) => {
-                if (res.status == HTTP_STATUS.OK) {
-                    setList(res.data);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -61,7 +45,6 @@ export default function AccountUser() {
             if (res.status == HTTP_STATUS.OK) {
                 toast.success(" Thành công");
                 handleClose();
-                renderListTopUp();
             } else {
                 toast.error("Không thành công");
             }

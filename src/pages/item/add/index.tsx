@@ -64,7 +64,7 @@ export default function AddItemComponent() {
           <ItemTypeComponent changeTypeId={changeTypeId}></ItemTypeComponent>
         </Box>
         <Box>
-          <p className="label">Ảnh sản phẩm</p>
+          <p className="label text-black">Ảnh sản phẩm</p>
           <Input
             type="file"
             inputProps={{ multiple: true }}
@@ -78,7 +78,7 @@ export default function AddItemComponent() {
           onClick={createItem}
           className="bg-blue-500 w-1/6 text-white"
         >
-          Add Item
+          Thêm sản phẩm
         </Button>
       </Box>
     </Page>

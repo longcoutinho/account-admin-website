@@ -9,13 +9,15 @@ export enum Backend {
   ITEM_SERVICE = BASE_URL + "/item",
   IMAGE_SERVICE = BASE_URL + "/image",
   TOPUP_SERVICE = BASE_URL + "/top-up",
+  REPORT_SERVICE = BASE_URL + "/report",
   ACCOUNT_SERVICE = BASE_URL + "/stock-account",
 }
 
 export enum Frontend {
-  BASE_URL = "http://localhost:3000",
+  BASE_URL = "http://localhost:3001",
   ADD_ITEM_PAGE = BASE_URL + "/item/add",
   EDIT_ITEM_PAGE = BASE_URL + "/item/edit",
+  EDIT_ACCOUNT_PAGE = BASE_URL + "/user/account-user/edit",
 }
 export enum HTTP_STATUS {
   OK = 200,

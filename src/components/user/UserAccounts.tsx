@@ -1,4 +1,4 @@
-import {DATE_TIME_FORMAT, HTTP_STATUS, PAGE_TITLE} from "@/constants";
+import {DATE_TIME_FORMAT, Frontend, HTTP_STATUS, PAGE_TITLE} from "@/constants";
 import Page from "@/layouts";
 import "@/constants/FnCommon";
 import React, { useEffect, useState } from "react";
@@ -18,17 +18,19 @@ import {
 import dayjs from "dayjs";
 import { ITopUpList } from "@/interfaces/request";
 import { confirmTopUpRequest, getAllTopUpRequest } from "@/services/top-up";
-import { TaskAltOutlined } from "@mui/icons-material";
+import {Edit, EditAttributesOutlined, EditAttributesRounded, TaskAltOutlined} from "@mui/icons-material";
 import { toast } from "react-toastify";
 import {getUserAccount} from "@/services/userService";
 import {ResponseUser} from "@/interfaces/response";
-import {formatDateTime, formatVND} from "@/constants/FnCommon";
+import {formatDateTime, formatVND, redirectUrl} from "@/constants/FnCommon";
+import {useRouter} from "next/router";
 
 export default function UserAccounts(props: any) {
     const [list, setList] = useState<ResponseUser[]>([]);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
         null
     );
+    const router = useRouter();
 
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
@@ -52,8 +54,11 @@ export default function UserAccounts(props: any) {
             });
     };
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleClick = (username: any) => {
+        redirectUrl(router, Frontend.EDIT_ACCOUNT_PAGE, {
+            username: username
+        })
+        // setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
@@ -87,7 +92,7 @@ export default function UserAccounts(props: any) {
                                 <TableCell>Tên đăng nhập</TableCell>
                                 <TableCell>Số dư</TableCell>
                                 <TableCell>Ngày tạo tài khoản</TableCell>
-                                <TableCell>Đổi mật khẩu</TableCell>
+                                <TableCell>Tác động</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -108,38 +113,38 @@ export default function UserAccounts(props: any) {
                                         <Button
                                             aria-describedby={id}
                                             className="bg-transparent"
-                                            onClick={handleClick}
+                                            onClick={() => handleClick(row.username)}
                                         >
-                                            <TaskAltOutlined />
+                                            <Edit />
                                         </Button>
-                                        <Popover
-                                            id={id}
-                                            open={open}
-                                            anchorEl={anchorEl}
-                                            onClose={handleClose}
-                                            anchorOrigin={{
-                                                vertical: "bottom",
-                                                horizontal: "left",
-                                            }}
-                                        >
-                                            <Typography sx={{ p: 2, textAlign: "center" }}>
-                                                Xác nhận!
-                                            </Typography>
-                                            <Box className="flex gap-5 px-10 pb-6">
-                                                <Button
-                                                    className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"
-                                                    onClick={() => handleConfirm(row.username)}
-                                                >
-                                                    Ok
-                                                </Button>
-                                                <Button
-                                                    className="bg-gray-400 hover:bg-gray-600  w-20 h-8 text-white"
-                                                    onClick={handleClose}
-                                                >
-                                                    Cancel
-                                                </Button>
-                                            </Box>
-                                        </Popover>
+                                        {/*<Popover*/}
+                                        {/*    id={id}*/}
+                                        {/*    open={open}*/}
+                                        {/*    anchorEl={anchorEl}*/}
+                                        {/*    onClose={handleClose}*/}
+                                        {/*    anchorOrigin={{*/}
+                                        {/*        vertical: "bottom",*/}
+                                        {/*        horizontal: "left",*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    <Typography sx={{ p: 2, textAlign: "center" }}>*/}
+                                        {/*        Xác nhận!*/}
+                                        {/*    </Typography>*/}
+                                        {/*    <Box className="flex gap-5 px-10 pb-6">*/}
+                                        {/*        <Button*/}
+                                        {/*            className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"*/}
+                                        {/*            onClick={() => handleConfirm(row.username)}*/}
+                                        {/*        >*/}
+                                        {/*            Ok*/}
+                                        {/*        </Button>*/}
+                                        {/*        <Button*/}
+                                        {/*            className="bg-gray-400 hover:bg-gray-600  w-20 h-8 text-white"*/}
+                                        {/*            onClick={handleClose}*/}
+                                        {/*        >*/}
+                                        {/*            Cancel*/}
+                                        {/*        </Button>*/}
+                                        {/*    </Box>*/}
+                                        {/*</Popover>*/}
                                     </TableCell>
                                 </TableRow>
                             ))}
