@@ -31,7 +31,7 @@ export interface IAccountInventory {
   itemId: string;
 }
 
-export interface ITopUpList {
+export interface ITopUpItem {
   id: string;
   amount: number;
   status: number;
@@ -39,6 +39,11 @@ export interface ITopUpList {
   createDate: string;
   method: number;
   username: string;
+}
+export interface ITopUpList {
+  listTopUp: ITopUpItem[];
+  totalAmount: number;
+  totalRequest: number;
 }
 
 export interface TopUpRequest {

@@ -3,14 +3,14 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-    --item-blue:#0000ff;
+  --item-blue: #0000ff;
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
     #16abff33 0deg,
@@ -41,7 +41,7 @@
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
 }
-*{
+* {
   font-size: 14px;
 }
 @media (prefers-color-scheme: dark) {
@@ -100,7 +100,7 @@ body {
 }
 
 a {
-  font-family: "Jost", sans-serif;
+  font-family: "Sora", sans-serif;
   text-decoration: none;
 }
 
@@ -110,14 +110,18 @@ a {
   }
 }
 
-@import url('https://fonts.googleapis.com/css?family=Inter');
+@import url("https://fonts.googleapis.com/css?family=Inter");
 
 body {
-  font-family: "Jost", sans-serif;
+  font-family: "Sora", sans-serif;
   background: #f9f9f9;
 }
-.root-container-page{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1) , rgba(0, 0, 0, 0.7) 60px, rgba(0, 0, 0, 0.99) 107px);
+.root-container-page {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.7) 60px,
+    rgba(0, 0, 0, 0.99) 107px
+  );
   background-clip: padding-box;
 }
 .full-box {
@@ -198,12 +202,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (max-width: 899px){
-    padding:0;
+  @media (max-width: 899px) {
+    padding: 0;
   }
 }
 
-.cart-shopping:hover, .cart-shopping_header:hover {
+.cart-shopping:hover,
+.cart-shopping_header:hover {
   cursor: pointer;
 }
 
@@ -265,7 +270,6 @@ body {
   height: 100%;
 }
 
-
 .list-posts-detail-element-3 {
   padding: 10px 0px 10px 0px;
   margin-top: 5px;
@@ -285,13 +289,12 @@ body {
   cursor: pointer;
 }
 
-
 .list-posts-image:hover {
   transition-duration: 1s;
 }
 
-.css-9mgopn-MuiDivider-root{
-  border-width: 1px ;
+.css-9mgopn-MuiDivider-root {
+  border-width: 1px;
   border-color: rgb(122, 157, 233);
 }
 
@@ -324,14 +327,14 @@ body {
   font-size: 15px;
 }
 
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected{
-  color:white;
-  background:var(--item-blue);
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: white;
+  background: var(--item-blue);
 }
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
-  background:#00206056;
-  color:var(--item-blue);
-  font-weight:600;
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  background: #00206056;
+  color: var(--item-blue);
+  font-weight: 600;
 }
 
 .posts-focus-title {
@@ -351,10 +354,11 @@ body {
   /* background-color: green; */
 }
 
-h1{    transition: all 0.3s linear;}
+h1 {
+  transition: all 0.3s linear;
+}
 
-
-.MuiPagination-ul li button{
+.MuiPagination-ul li button {
   color: #666666;
   font-size: 17px;
   border: 1px solid #444444;
@@ -363,7 +367,7 @@ h1{    transition: all 0.3s linear;}
   height: 40px;
 }
 
-.MuiPagination-ul li button:hover{
+.MuiPagination-ul li button:hover {
   background-color: #444444;
   color: white;
 }
@@ -397,7 +401,6 @@ h1{    transition: all 0.3s linear;}
   border-radius: 20px;
   border: 1px solid white;
   color: black;
-
 }
 
 .list-posts-input-content:focus {
@@ -439,7 +442,7 @@ h1{    transition: all 0.3s linear;}
 .list-read-most-title {
   width: 90%;
   height: 100%;
-  display: block;/* or inline-block */
+  display: block; /* or inline-block */
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
@@ -458,14 +461,14 @@ h1{    transition: all 0.3s linear;}
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  gap:20px;
+  gap: 20px;
   padding: 0px 0px 50px 0px;
 }
-.css-10d9dml-MuiTabs-indicator{
-  display:none;
+.css-10d9dml-MuiTabs-indicator {
+  display: none;
 }
-.css-35zqo5-MuiTabs-root{
-  border-right:unset;
+.css-35zqo5-MuiTabs-root {
+  border-right: unset;
 }
 
 .btn-details-post-course {
@@ -473,10 +476,10 @@ h1{    transition: all 0.3s linear;}
   width: fit-content;
   padding: 0.5em 1.2em !important;
   border-radius: 18px;
-  background-color: rgb(0,32,96);
+  background-color: rgb(0, 32, 96);
   color: white;
-  position:absolute;
-  bottom:10px;
+  position: absolute;
+  bottom: 10px;
 }
 
 #image-item-detail {
@@ -613,7 +616,7 @@ h1{    transition: all 0.3s linear;}
     line-height: 1em;
   }
 }
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
   padding: 0;
   min-width: 1em;
 }
@@ -659,15 +662,15 @@ h1{    transition: all 0.3s linear;}
 
 .cart-title-p {
   display: flex;
-  @media(max-width: 1300px) {
+  @media (max-width: 1300px) {
     display: none;
   }
 }
 
 .display-laptop {
-@media(min-width: 800px) {
-  display: none;
-}
+  @media (min-width: 800px) {
+    display: none;
+  }
 }
 
 .banner-title-container {
@@ -676,7 +679,7 @@ h1{    transition: all 0.3s linear;}
   align-items: center;
   justify-content: center;
   height: 150px;
-  background-color: #F3EAD8;
+  background-color: #f3ead8;
   p {
     text-transform: capitalize;
   }

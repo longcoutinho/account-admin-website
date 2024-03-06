@@ -6,7 +6,7 @@ import "swiper/css/scrollbar";
 import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "@/services/userService";
-import {Frontend, HTTP_STATUS, PageURL} from "@/constants";
+import { Frontend, HTTP_STATUS, PageURL } from "@/constants";
 import { useRouter } from "next/router";
 import { redirectUrl, saveUserToSessionStorage } from "@/constants/FnCommon";
 
@@ -27,74 +27,82 @@ export default function Login() {
       );
     };
 
-        const doSignIn = async () => {
-                const request = {
-                    username: username,
-                    password: password,
-                }
-                signIn(request).then(
-                    (res) => {
-                        if (res.status == HTTP_STATUS.OK) {
-                            console.log(res.data);
-                            saveUserToSessionStorage(res.data);
-                            redirectUrl(route, '/item/categories', null);
-                        }
-                        else {
-                            setNotify(res.response.data);
-                            setNotifyColor('red');
-                            console.log(res);
-                        }
-                    }).catch((err) => {
-                    setNotify(err.response.data);
-                    setNotifyColor('red');
-                    console.log(err);
-                });
-        }
-
-        return (
-            <Box className="login-wrapper">
-                    <Box className="title-container">
-                        <p>login</p>
-                        <p>Enter Login details to get access</p>
-                    </Box>
-                    <Box className="form-container">
-                        <Box className="input-container">
-                            <label>Username</label>
-                            <input type="text"
-                                   value={username}
-                                   onChange={e => { setUsername(e.currentTarget.value); }}
-                                   placeholder="Username"></input>
-                        </Box>
-                        <Box className="input-container">
-                            <label>Password</label>
-                            <input type="password"
-                                   value={password}
-                                   onChange={e => { setPassword(e.currentTarget.value); }}
-                                   placeholder="Enter Password"></input>
-                        </Box>
-                        <Notify textColor={notifyColor} text={notify}></Notify>
-                        <Box className="forgot-password-container">
-                            <Box className="remember-me-container">
-                                <input type={"checkbox"}/>
-                                <label>keep me logged in</label>
-                            </Box>
-                            <Box className="forgot-pass-container">
-                                <Link href={"/signup"}>forgot password?</Link>
-                            </Box>
-                        </Box>
-                    </Box>
-                    <Box className="login-button-container flex flex-row items-center justify-center">
-                        <Button
-                            onClick={doSignIn}
-                            className="login-button">Login</Button>
-                    </Box>
-            </Box>
-        )
-    }
+    const doSignIn = async () => {
+      const request = {
+        username: username,
+        password: password,
+      };
+      signIn(request)
+        .then((res) => {
+          if (res.status == HTTP_STATUS.OK) {
+            console.log(res.data);
+            saveUserToSessionStorage(res.data);
+            redirectUrl(route, "/item/categories", null);
+          } else {
+            setNotify(res.response.data);
+            setNotifyColor("red");
+            console.log(res);
+          }
+        })
+        .catch((err) => {
+          setNotify(err?.response?.data);
+          setNotifyColor("red");
+          console.log(err);
+        });
+    };
 
     return (
-        <Box className="login-container" sx={{ width: "100vw"}}>
-            <LoginForm></LoginForm>
+      <Box className="login-wrapper">
+        <Box className="title-container">
+          <p>login</p>
+          <p>Enter Login details to get access</p>
         </Box>
+        <Box className="form-container">
+          <Box className="input-container">
+            <label>Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.currentTarget.value);
+              }}
+              placeholder="Username"
+            ></input>
+          </Box>
+          <Box className="input-container">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.currentTarget.value);
+              }}
+              placeholder="Enter Password"
+            ></input>
+          </Box>
+          <Notify textColor={notifyColor} text={notify}></Notify>
+          <Box className="forgot-password-container">
+            <Box className="remember-me-container">
+              <input type={"checkbox"} />
+              <label>keep me logged in</label>
+            </Box>
+            <Box className="forgot-pass-container">
+              <Link href={"/signup"}>forgot password?</Link>
+            </Box>
+          </Box>
+        </Box>
+        <Box className="login-button-container flex flex-row items-center justify-center">
+          <Button onClick={doSignIn} className="login-button">
+            Login
+          </Button>
+        </Box>
+      </Box>
     );
+  };
+
+  return (
+    <Box className="login-container" sx={{ width: "100vw" }}>
+      <LoginForm></LoginForm>
+    </Box>
+  );
 }

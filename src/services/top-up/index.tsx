@@ -1,8 +1,10 @@
 import { Backend } from "@/constants";
 import { doGetRequest, doPostRequest, getUserInfo } from "@/constants/FnCommon";
-import {TopUpRequest} from "@/interfaces/request";
+import { TopUpRequest } from "@/interfaces/request";
 
-export const getAllTopUpRequest = async (params: TopUpRequest): Promise<any> => {
+export const getAllTopUpRequest = async (
+  params: TopUpRequest
+): Promise<any> => {
   const url = Backend.TOPUP_SERVICE + "/list";
   return doGetRequest(url, params);
 };
