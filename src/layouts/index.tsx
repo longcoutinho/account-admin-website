@@ -17,7 +17,7 @@ const Page = (props: any) => {
       </Head>
       <HorizonHeader></HorizonHeader>
       <NotificationWrapper />
-      <Box className="w-full flex flex-col">
+      <Box className="w-full flex flex-col  h-screen overflow-auto">
         <Header></Header>
         <Box className="p-5">{children}</Box>
       </Box>

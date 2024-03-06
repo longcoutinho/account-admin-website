@@ -8,6 +8,7 @@ import {
   CircularProgress,
   MenuItem,
   Modal,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -45,6 +46,10 @@ export default function UserAccounts(props: any) {
   const [loading, setLoading] = React.useState(false);
   const [change, setChange] = React.useState<string>("");
   const [balance, setBalance] = useState("");
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     if (props.type != null) {
@@ -101,57 +106,65 @@ export default function UserAccounts(props: any) {
   return (
     <Box>
       {list?.length > 0 ? (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>STT</TableCell>
-                <TableCell>Tên đăng nhập</TableCell>
-                <TableCell>Số dư</TableCell>
-                <TableCell>Ngày tạo tài khoản</TableCell>
-                <TableCell>Thay đổi mật khẩu</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {list.map((row, index) => (
-                <TableRow
-                  key={row.username}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    onClick={() => {
-                      handleOpen();
-                      setItem(row);
-                    }}
-                  >
-                    {formatVND(row.balance, false)}
-                    <Edit
-                      sx={{
-                        width: "14px",
-                        height: "14px",
-                        marginBottom: "4px",
-                        marginLeft: "4px",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {formatDateTime(row.createDate)}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Button className="bg-transparent" onClick={handleOpenPW}>
-                      <Edit />
-                    </Button>
-                  </TableCell>
+        <>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>STT</TableCell>
+                  <TableCell>Tên đăng nhập</TableCell>
+                  <TableCell>Số dư</TableCell>
+                  <TableCell>Ngày tạo tài khoản</TableCell>
+                  <TableCell>Thay đổi mật khẩu</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {list.map((row, index) => (
+                  <TableRow
+                    key={row.username}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.username}</TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      onClick={() => {
+                        handleOpen();
+                        setItem(row);
+                      }}
+                    >
+                      {formatVND(row.balance, false)}
+                      <Edit
+                        sx={{
+                          width: "14px",
+                          height: "14px",
+                          marginBottom: "4px",
+                          marginLeft: "4px",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {formatDateTime(row.createDate)}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Button className="bg-transparent" onClick={handleOpenPW}>
+                        <Edit />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Pagination
+            count={10}
+            page={page}
+            onChange={handleChange}
+            className="custom-pagination"
+          />
+        </>
       ) : (
         <p>No data</p>
       )}
@@ -235,23 +248,23 @@ export default function UserAccounts(props: any) {
             <TextField
               label="Mật khẩu mới"
               className="w-full"
-              value={balance}
+              // value={balance}
               type="password"
               placeholder="Mật khẩu mới"
-              onChange={(e) => setBalance(e.target.value)}
+              // onChange={(e) => setBalance(e.target.value)}
             />
             <TextField
               label="Nhập lại mật khẩu mới"
               className="w-full"
-              value={balance}
+              // value={balance}
               type="password"
               placeholder="Nhập lại mật khẩu mới"
-              onChange={(e) => setBalance(e.target.value)}
+              // onChange={(e) => setBalance(e.target.value)}
             />
             <Box className="flex gap-5 px-10 mt-4">
               <Button
                 className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
-                onClick={handleConfirm}
+                // onClick={}
               >
                 {loading && (
                   <CircularProgress
