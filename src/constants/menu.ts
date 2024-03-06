@@ -43,12 +43,26 @@ export const menuBar = [
     icon: faUser,
     child: [
       {
-        title: "Tai khoan nguoi dung",
+        title: "Tài khoản người dùng",
         url: "/user/account-user",
       },
       {
-        title: "Tai khoan admin",
+        title: "Tài khoản admin",
         url: "/user/account-admin",
+      },
+    ],
+  },
+  {
+    title: "Thống kê",
+    icon: faUser,
+    child: [
+      {
+        title: "Nạp tiền",
+        url: "/report/top-up",
+      },
+      {
+        title: "Đơn hàng",
+        url: "/report/sale-order",
       },
     ],
   },

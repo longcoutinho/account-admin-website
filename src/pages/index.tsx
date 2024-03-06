@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {getUserInfo, redirectUrl} from "@/constants/FnCommon";
 import {useRouter} from "next/router";
-import {PageURL} from "@/constants";
+import {Frontend, PageURL} from "@/constants";
 
 export default function Home() {
     const router = useRouter();

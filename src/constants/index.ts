@@ -209,3 +209,5 @@ export const MenuTitle: any = [
     drop_down: false,
   }
 ];
+
+export const DATE_TIME_FORMAT = "HH:mm:ss DD-MM-YYYY"

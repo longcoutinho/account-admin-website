@@ -57,3 +57,9 @@ export interface ItemToCart {
   totalPrice: number;
   itemId: string;
 }
+
+export interface ResponseUser {
+  username: string;
+  balance: number;
+  createDate: string;
+}
