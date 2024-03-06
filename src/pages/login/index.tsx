@@ -37,9 +37,15 @@ export default function Login() {
                             saveUserToSessionStorage(res.data);
                             redirectUrl(route, PageURL.HOME, null);
                         }
+                        else {
+                            setNotify(res.response.data);
+                            setNotifyColor('red');
+                            console.log(res);
+                        }
                     }).catch((err) => {
                     setNotify(err.response.data);
                     setNotifyColor('red');
+                    console.log(err);
                 });
         }
 
@@ -75,13 +81,7 @@ export default function Login() {
                             </Box>
                         </Box>
                     </Box>
-                    <Box className="login-button-container">
-                        <Box className="sign-up-container">
-                            <p>Don&apos;t have an account?
-                            </p>
-                            <Link href={PageURL.SIGNUP}>Sign Up</Link>
-                            <p>here</p>
-                        </Box>
+                    <Box className="login-button-container flex flex-row items-center justify-center">
                         <Button
                             onClick={doSignIn}
                             className="login-button">Login</Button>
