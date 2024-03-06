@@ -1,23 +1,22 @@
 import { HTTP_STATUS } from "@/constants";
 import { Box, MenuItem, TextField } from "@mui/material";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import "@/constants/FnCommon";
 import React, { useEffect, useState } from "react";
-import { ItemType } from "@/interfaces/request";
-import { getItemTypeByLevelAndParentId } from "@/services/item";
+import { getAllItem } from "@/services/item";
+import { Item } from "@/interfaces/response";
 
-export default function ItemTypeComponent(props: any) {
-  const [listItem, setListItem] = useState<ItemType[]>([]);
+interface IProps {
+  changeItem: (e: number) => void;
+}
+export default function SelectAllItem({ changeItem }: IProps) {
+  const [listItem, setListItem] = useState<Item[]>([]);
 
   useEffect(() => {
     renderListItem();
   }, []);
 
   const renderListItem = () => {
-    getItemTypeByLevelAndParentId()
+    getAllItem()
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
           setListItem(res.data);
@@ -33,14 +32,15 @@ export default function ItemTypeComponent(props: any) {
       <TextField
         id="outlined-select-currency"
         select
-        label="Loại sản phẩm"
+        label="Sản phẩm"
         defaultValue="EUR"
         className="w-full"
-        onChange={(e) => props.changeTypeId(e.target.value)}
+        placeholder="chọn sản phẩm"
+        onChange={(e) => changeItem(Number(e.target.value))}
       >
-        {listItem.map((itemType) => (
-          <MenuItem value={itemType.itemTypeId} key={itemType.itemTypeId}>
-            {itemType.name}
+        {listItem.map((item) => (
+          <MenuItem value={item.id} key={item.id}>
+            {item.name}
           </MenuItem>
         ))}
       </TextField>

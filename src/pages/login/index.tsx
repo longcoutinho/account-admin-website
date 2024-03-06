@@ -1,29 +1,31 @@
-import {Box, Button} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import {signIn} from "@/services/userService";
-import {HTTP_STATUS, PageURL} from "@/constants";
-import {useRouter} from "next/router";
-import {redirectUrl, saveUserToSessionStorage} from "@/constants/FnCommon";
+import { signIn } from "@/services/userService";
+import {Frontend, HTTP_STATUS, PageURL} from "@/constants";
+import { useRouter } from "next/router";
+import { redirectUrl, saveUserToSessionStorage } from "@/constants/FnCommon";
 
 export default function Login() {
-    const route = useRouter();
-    const LoginForm = () => {
-        const [username, setUsername] = useState('');
-        const [password, setPassword] = useState('');
-        const [notify, setNotify] = useState('');
-        const [notifyColor, setNotifyColor] = useState('');
-        const Notify = (props: any) => {
-            return (
-                <Box className="notify-text-container">
-                    <p style={{color: props.textColor}} className="notify-text">{props.text}</p>
-                </Box>
-            )
-        }
+  const route = useRouter();
+  const LoginForm = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [notify, setNotify] = useState("");
+    const [notifyColor, setNotifyColor] = useState("");
+    const Notify = (props: any) => {
+      return (
+        <Box className="notify-text-container">
+          <p style={{ color: props.textColor }} className="notify-text">
+            {props.text}
+          </p>
+        </Box>
+      );
+    };
 
         const doSignIn = async () => {
                 const request = {
@@ -35,7 +37,7 @@ export default function Login() {
                         if (res.status == HTTP_STATUS.OK) {
                             console.log(res.data);
                             saveUserToSessionStorage(res.data);
-                            redirectUrl(route, PageURL.HOME, null);
+                            redirectUrl(route, '/item/categories', null);
                         }
                         else {
                             setNotify(res.response.data);

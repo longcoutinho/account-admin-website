@@ -2,11 +2,12 @@ import {Course} from "@/interfaces/response";
 import {PATH_PAGE} from "@/routes/path";
 
 export enum Backend {
-  // BASE_URL = 'http://58.187.168.147:8989',
-  BASE_URL = 'http://10.248.158.39:8989',
+  BASE_URL = 'http://58.187.168.147:8989',
   USER_SERVICE = BASE_URL + '/user',
   ITEM_SERVICE = BASE_URL + '/item',
   IMAGE_SERVICE = BASE_URL + '/image',
+  TOPUP_SERVICE = BASE_URL + '/top-up',
+  ACCOUNT_SERVICE = BASE_URL + '/stock-account',
 }
 
 export enum Frontend {
