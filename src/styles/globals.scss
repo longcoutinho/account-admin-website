@@ -116,6 +116,12 @@ body {
   font-family: "Sora", sans-serif;
   background: #f9f9f9;
 }
+.custom-pagination {
+  @apply mx-auto my-3 flex justify-center;
+  button {
+    border: none !important;
+  }
+}
 .root-container-page {
   background-image: linear-gradient(
     rgba(0, 0, 0, 0.1),

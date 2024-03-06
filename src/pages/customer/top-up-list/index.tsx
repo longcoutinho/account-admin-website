@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Pagination,
   Paper,
   Popover,
   Table,
@@ -37,6 +38,10 @@ export default function Inventory() {
   const [username, setUsername] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [idRow, setIdRow] = useState("");
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   const open = Boolean(anchorEl);
   const openCancel = Boolean(anchorElCancel);
@@ -150,64 +155,72 @@ export default function Inventory() {
       </Box>
       <Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">
         {list?.totalRequest && list?.totalRequest > 0 ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>STT</TableCell>
-                  <TableCell>Mã giao dịch</TableCell>
-                  <TableCell>Tên đăng nhập</TableCell>
-                  <TableCell>Phương thức</TableCell>
-                  <TableCell>Số tiền</TableCell>
-                  <TableCell>Thời gian</TableCell>
-                  <TableCell>Xác nhận</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {list?.listTopUp.map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.username}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.method === 1
-                        ? "Internet Banking"
-                        : row.method === 2
-                        ? "MoMo"
-                        : ""}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {formatVND(row.amount, false)}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {dayjs(row.createDate).format("YYYY-MM-DD HH:mm:ss")}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Button
-                        aria-describedby={id}
-                        className="bg-transparent"
-                        onClick={(e) => handleClick(e, row.id)}
-                      >
-                        <TaskAltOutlined />
-                      </Button>
-                      <Button
-                        aria-describedby={idCancel}
-                        className="bg-transparent ml-4"
-                        onClick={(e) => handleClickCancel(e, row.id)}
-                      >
-                        <CancelOutlined />
-                      </Button>
-                    </TableCell>
+          <>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>STT</TableCell>
+                    <TableCell>Mã giao dịch</TableCell>
+                    <TableCell>Tên đăng nhập</TableCell>
+                    <TableCell>Phương thức</TableCell>
+                    <TableCell>Số tiền</TableCell>
+                    <TableCell>Thời gian</TableCell>
+                    <TableCell>Xác nhận</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {list?.listTopUp.map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.id}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.username}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.method === 1
+                          ? "Internet Banking"
+                          : row.method === 2
+                          ? "MoMo"
+                          : ""}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {formatVND(row.amount, false)}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {dayjs(row.createDate).format("YYYY-MM-DD HH:mm:ss")}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Button
+                          aria-describedby={id}
+                          className="bg-transparent"
+                          onClick={(e) => handleClick(e, row.id)}
+                        >
+                          <TaskAltOutlined />
+                        </Button>
+                        <Button
+                          aria-describedby={idCancel}
+                          className="bg-transparent ml-4"
+                          onClick={(e) => handleClickCancel(e, row.id)}
+                        >
+                          <CancelOutlined />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Pagination
+              count={10}
+              page={page}
+              onChange={handleChange}
+              className="custom-pagination"
+            />
+          </>
         ) : (
           <p>No data</p>
         )}
