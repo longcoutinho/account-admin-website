@@ -24,6 +24,7 @@ import { getUserAccount } from "@/services/userService";
 import { ResponseUser } from "@/interfaces/response";
 import { formatDateTime, formatVND, redirectUrl } from "@/constants/FnCommon";
 import { useRouter } from "next/router";
+import ModalChangeBalance from "./ModalChangeBalance";
 
 const style = {
   position: "absolute" as "absolute",
@@ -40,9 +41,8 @@ const style = {
 export default function UserAccounts(props: any) {
   const [list, setList] = useState<ResponseUser[]>([]);
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [change, setChange] = React.useState<string>("");
-  const [balance, setBalance] = useState("");
+  const [openPW, setOpenPW] = React.useState(false);
+  const [item, setItem] = useState<ResponseUser>();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,7 +51,6 @@ export default function UserAccounts(props: any) {
 
   useEffect(() => {
     if (props.type != null) {
-      console.log(props.type);
       renderListAccount();
     }
   }, [props.type]);
@@ -85,7 +84,7 @@ export default function UserAccounts(props: any) {
                 <TableCell>Tên đăng nhập</TableCell>
                 <TableCell>Số dư</TableCell>
                 <TableCell>Ngày tạo tài khoản</TableCell>
-                <TableCell>Tác động</TableCell>
+                <TableCell>Thay đổi mật khẩu</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -96,7 +95,14 @@ export default function UserAccounts(props: any) {
                 >
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row.username}</TableCell>
-                  <TableCell component="th" scope="row" onClick={handleOpen}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => {
+                      handleOpen();
+                      setItem(row);
+                    }}
+                  >
                     {formatVND(row.balance, false)}
                     <Edit
                       sx={{
@@ -107,64 +113,6 @@ export default function UserAccounts(props: any) {
                         cursor: "pointer",
                       }}
                     />
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style} className="flex gap-4 flex-col">
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h5"
-                          component="h2"
-                          className="text-center font-semibold"
-                        >
-                          Điều chỉnh số dư
-                        </Typography>
-                        <p>Số dư: {formatVND(row.balance, false)}</p>
-                        <TextField
-                          className="w-full"
-                          id="outlined-select-currency"
-                          select
-                          label="Tăng/Giảm số dư"
-                          defaultValue=""
-                          value={change}
-                          onChange={(e) => setChange(e.target.value)}
-                        >
-                          <MenuItem value={"inc"}>Tăng</MenuItem>
-                          <MenuItem value={"dec"}>Giảm</MenuItem>
-                        </TextField>
-                        <TextField
-                          label="Nhập số"
-                          className="w-full"
-                          value={balance}
-                          placeholder="Nhập số"
-                          onChange={(e) => setBalance(e.target.value)}
-                        />
-                        <Box className="flex gap-5 px-10 mt-4">
-                          <Button
-                            className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
-                            // onClick={() => handleConfirm(row.id)}
-                          >
-                            {loading && (
-                              <CircularProgress
-                                size={20}
-                                color="inherit"
-                                className="mr-2"
-                              />
-                            )}
-                            Xác nhận
-                          </Button>
-                          <Button
-                            className="hover:bg-gray-400 bg-gray-600  w-32 h-10 text-white"
-                            onClick={handleClose}
-                          >
-                            Hủy
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Modal>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {formatDateTime(row.createDate)}
@@ -184,6 +132,9 @@ export default function UserAccounts(props: any) {
         </TableContainer>
       ) : (
         <p>No data</p>
+      )}
+      {open && (
+        <ModalChangeBalance open={open} handleClose={handleClose} item={item} />
       )}
     </Box>
   );
