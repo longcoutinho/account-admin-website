@@ -20,11 +20,10 @@ import {
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { getUserAccount } from "@/services/userService";
+import { adjustBalance, getUserAccount } from "@/services/userService";
 import { ResponseUser } from "@/interfaces/response";
 import { formatDateTime, formatVND, redirectUrl } from "@/constants/FnCommon";
 import { useRouter } from "next/router";
-import ModalChangeBalance from "./ModalChangeBalance";
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,17 +42,47 @@ export default function UserAccounts(props: any) {
   const [open, setOpen] = React.useState(false);
   const [openPW, setOpenPW] = React.useState(false);
   const [item, setItem] = useState<ResponseUser>();
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+  const [change, setChange] = React.useState<string>("");
+  const [balance, setBalance] = useState("");
 
   useEffect(() => {
     if (props.type != null) {
       renderListAccount();
     }
   }, [props.type]);
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    try {
+      const res = await adjustBalance(
+        item && item.username ? item.username : "",
+        change === "inc" ? Number(balance) : -Number(balance)
+      );
+      if (res.status == HTTP_STATUS.OK) {
+        setLoading(false);
+        renderListAccount();
+        handleClose();
+        toast.success("Thành công");
+      } else {
+        setLoading(false);
+        toast.success("Không thành công");
+      }
+    } catch {
+      setLoading(false);
+      toast.success("Không thành công");
+      //
+    }
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setChange("");
+    setBalance("");
+  };
+
+  const router = useRouter();
 
   const renderListAccount = () => {
     getUserAccount(props.type)
@@ -134,7 +163,65 @@ export default function UserAccounts(props: any) {
         <p>No data</p>
       )}
       {open && (
-        <ModalChangeBalance open={open} handleClose={handleClose} item={item} />
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style} className="flex gap-4 flex-col">
+            <Typography
+              id="modal-modal-title"
+              variant="h5"
+              component="h2"
+              className="text-center font-semibold"
+            >
+              Điều chỉnh số dư
+            </Typography>
+            <p>Số dư: {item?.balance}</p>
+            <TextField
+              className="w-full"
+              id="outlined-select-currency"
+              select
+              label="Tăng/Giảm số dư"
+              defaultValue=""
+              value={change}
+              onChange={(e) => setChange(e.target.value)}
+            >
+              <MenuItem value={"inc"}>Tăng</MenuItem>
+              <MenuItem value={"dec"}>Giảm</MenuItem>
+            </TextField>
+            <TextField
+              label="Nhập số"
+              className="w-full"
+              type="number"
+              value={balance}
+              placeholder="Nhập số"
+              onChange={(e) => setBalance(e.target.value)}
+            />
+            <Box className="flex gap-5 px-10 mt-4">
+              <Button
+                className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
+                onClick={handleConfirm}
+              >
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    color="inherit"
+                    className="mr-2"
+                  />
+                )}
+                Xác nhận
+              </Button>
+              <Button
+                className="hover:bg-gray-400 bg-gray-600  w-32 h-10 text-white"
+                onClick={handleClose}
+              >
+                Hủy
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
       )}
     </Box>
   );
