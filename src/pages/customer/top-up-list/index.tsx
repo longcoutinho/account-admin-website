@@ -77,25 +77,27 @@ export default function Inventory() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
+                <TableCell>STT</TableCell>
+                <TableCell>Mã giao dịch</TableCell>
                 <TableCell>Phương thức</TableCell>
-                <TableCell>Số lượng</TableCell>
-                <TableCell>Ngày tạo</TableCell>
+                <TableCell>Số tiền</TableCell>
+                <TableCell>Thời gian</TableCell>
                 <TableCell>Xác nhận</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.map((row) => (
+              {list.map((row, index) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell>{row.userId}</TableCell>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{row.id}</TableCell>
                   <TableCell component="th" scope="row">
                     {row.method === 1
-                      ? "internet banking"
+                      ? "Internet Banking"
                       : row.method === 2
-                      ? "Momo"
+                      ? "MoMo"
                       : ""}
                   </TableCell>
                   <TableCell component="th" scope="row">
