@@ -76,8 +76,10 @@ export default function UserAccounts(props: any) {
   };
 
   const handleOpen = () => setOpen(true);
+  const handleOpenPW = () => setOpenPW(true);
   const handleClose = () => {
     setOpen(false);
+    setOpenPW(false);
     setChange("");
     setBalance("");
   };
@@ -94,12 +96,6 @@ export default function UserAccounts(props: any) {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const handleClick = (username: any) => {
-    redirectUrl(router, Frontend.EDIT_ACCOUNT_PAGE, {
-      username: username,
-    });
   };
 
   return (
@@ -147,10 +143,7 @@ export default function UserAccounts(props: any) {
                     {formatDateTime(row.createDate)}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    <Button
-                      className="bg-transparent"
-                      onClick={() => handleClick(row.username)}
-                    >
+                    <Button className="bg-transparent" onClick={handleOpenPW}>
                       <Edit />
                     </Button>
                   </TableCell>
@@ -197,6 +190,62 @@ export default function UserAccounts(props: any) {
               type="number"
               value={balance}
               placeholder="Nhập số"
+              onChange={(e) => setBalance(e.target.value)}
+            />
+            <Box className="flex gap-5 px-10 mt-4">
+              <Button
+                className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
+                onClick={handleConfirm}
+              >
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    color="inherit"
+                    className="mr-2"
+                  />
+                )}
+                Xác nhận
+              </Button>
+              <Button
+                className="hover:bg-gray-400 bg-gray-600  w-32 h-10 text-white"
+                onClick={handleClose}
+              >
+                Hủy
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      )}
+      {openPW && (
+        <Modal
+          open={openPW}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style} className="flex gap-4 flex-col">
+            <Typography
+              id="modal-modal-title"
+              variant="h5"
+              component="h2"
+              className="text-center font-semibold"
+            >
+              Thay đổi mật khẩu
+            </Typography>
+            <TextField
+              label="Mật khẩu mới"
+              className="w-full"
+              value={balance}
+              type="password"
+              placeholder="Mật khẩu mới"
+              onChange={(e) => setBalance(e.target.value)}
+            />
+            <TextField
+              label="Nhập lại mật khẩu mới"
+              className="w-full"
+              value={balance}
+              type="password"
+              placeholder="Nhập lại mật khẩu mới"
               onChange={(e) => setBalance(e.target.value)}
             />
             <Box className="flex gap-5 px-10 mt-4">

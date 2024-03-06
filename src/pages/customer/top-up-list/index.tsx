@@ -36,6 +36,7 @@ export default function Inventory() {
     React.useState<HTMLButtonElement | null>(null);
   const [username, setUsername] = useState("");
   const [transactionId, setTransactionId] = useState("");
+  const [idRow, setIdRow] = useState("");
 
   const open = Boolean(anchorEl);
   const openCancel = Boolean(anchorElCancel);
@@ -63,11 +64,19 @@ export default function Inventory() {
       });
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
     setAnchorEl(event.currentTarget);
+    setIdRow(id);
   };
-  const handleClickCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickCancel = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
     setAnchorElCancel(event.currentTarget);
+    setIdRow(id);
   };
 
   const handleClose = () => {
@@ -182,73 +191,17 @@ export default function Inventory() {
                       <Button
                         aria-describedby={id}
                         className="bg-transparent"
-                        onClick={handleClick}
+                        onClick={(e) => handleClick(e, row.id)}
                       >
                         <TaskAltOutlined />
                       </Button>
                       <Button
                         aria-describedby={idCancel}
                         className="bg-transparent ml-4"
-                        onClick={handleClickCancel}
+                        onClick={(e) => handleClickCancel(e, row.id)}
                       >
                         <CancelOutlined />
                       </Button>
-                      <Popover
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                      >
-                        <Typography sx={{ p: 2, textAlign: "center" }}>
-                          Xác nhận yêu cầu!
-                        </Typography>
-                        <Box className="flex gap-5 px-10 pb-6">
-                          <Button
-                            className=" hover:bg-blue-400 bg-blue-600 w-20 h-8 text-white"
-                            onClick={() => handleConfirm(row.id)}
-                          >
-                            Ok
-                          </Button>
-                          <Button
-                            className="hover:bg-gray-400 bg-gray-600  w-20 h-8 text-white"
-                            onClick={handleClose}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Popover>
-                      <Popover
-                        id={idCancel}
-                        open={openCancel}
-                        anchorEl={anchorElCancel}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                      >
-                        <Typography sx={{ p: 2, textAlign: "center" }}>
-                          Hủy yêu cầu
-                        </Typography>
-                        <Box className="flex gap-5 px-10 pb-6">
-                          <Button
-                            className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"
-                            onClick={() => handleConfirmCancel(row.id)}
-                          >
-                            Ok
-                          </Button>
-                          <Button
-                            className="bg-gray-400 hover:bg-gray-600  w-20 h-8 text-white"
-                            onClick={handleClose}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Popover>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -259,6 +212,60 @@ export default function Inventory() {
           <p>No data</p>
         )}
       </Box>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Typography sx={{ p: 2, textAlign: "center" }}>
+          Xác nhận yêu cầu!
+        </Typography>
+        <Box className="flex gap-5 px-10 pb-6">
+          <Button
+            className=" hover:bg-blue-400 bg-blue-600 w-20 h-8 text-white"
+            onClick={() => handleConfirm(idRow)}
+          >
+            Ok
+          </Button>
+          <Button
+            className="hover:bg-gray-400 bg-gray-600  w-20 h-8 text-white"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Popover>
+      <Popover
+        id={idCancel}
+        open={openCancel}
+        anchorEl={anchorElCancel}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Typography sx={{ p: 2, textAlign: "center" }}>Hủy yêu cầu</Typography>
+        <Box className="flex gap-5 px-10 pb-6">
+          <Button
+            className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"
+            onClick={() => handleConfirmCancel(idRow)}
+          >
+            Ok
+          </Button>
+          <Button
+            className="bg-gray-400 hover:bg-gray-600  w-20 h-8 text-white"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Popover>
     </Page>
   );
 }
