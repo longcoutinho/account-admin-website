@@ -19,3 +19,8 @@ export const getUserAccount = async (type: number) => {
     };
     return doGetRequest(url, request);
 };
+
+export const getUserInfoByUsername = async (username: any) => {
+    const url = Backend.USER_SERVICE + '/username/' + username;
+    return doGetRequest(url, null);
+};

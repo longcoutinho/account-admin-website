@@ -1,7 +1,7 @@
 import { HTTP_STATUS, PAGE_TITLE } from "@/constants";
 import Page from "@/layouts";
 import "@/constants/FnCommon";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Paper,
   Table,
@@ -19,8 +19,12 @@ import SelectAllItem from "@/components/item/all/SelectAllItem";
 export default function Inventory() {
   const [listAccount, setListAccount] = useState<IAccountInventory[]>([]);
 
-  const renderListAccount = (id: number) => {
-    getAccountByItemId(String(id))
+  useEffect(() => {
+    renderListAccount(null);
+  }, []);
+
+  const renderListAccount = (id: number | null) => {
+    getAccountByItemId(id)
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
           setListAccount(res.data);

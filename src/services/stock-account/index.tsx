@@ -7,7 +7,7 @@ export const createNewAccount = async (request: Account) : Promise<any> => {
     return doPostRequest(url, request);
 }
 
-export const getAccountByItemId = async (itemId: string) : Promise<any> => {
+export const getAccountByItemId = async (itemId: any) : Promise<any> => {
     const url = Backend.ACCOUNT_SERVICE + '';
     const params = {
         itemId: itemId || null

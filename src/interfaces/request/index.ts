@@ -38,4 +38,11 @@ export interface ITopUpList {
   userId: string;
   createDate: string;
   method: number;
+  username: string;
+}
+
+export interface TopUpRequest {
+  transId: string | null;
+  username: string | null;
+  status: number | null;
 }
