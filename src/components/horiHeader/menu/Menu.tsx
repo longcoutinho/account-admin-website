@@ -38,7 +38,7 @@ export default function Menu() {
       {menuElement.child?.map((menuChild, index2) => (
         <Link
           href={menuChild.url}
-          className={`menu-element-child-container ${
+          className={`menu-element-child-container block ${
             route.pathname === menuChild.url ? "bg-gray-800" : ""
           }`}
           key={index2}
