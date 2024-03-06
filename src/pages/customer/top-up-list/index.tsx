@@ -129,13 +129,13 @@ export default function Inventory() {
                       </Typography>
                       <Box className="flex gap-5 px-10 pb-6">
                         <Button
-                          className=" bg-blue-400 hover:bg-blue-600 w-20 h-8 text-white"
+                          className=" hover:bg-blue-400 bg-blue-600 w-20 h-8 text-white"
                           onClick={() => handleConfirm(row.id)}
                         >
                           Ok
                         </Button>
                         <Button
-                          className="bg-gray-400 hover:bg-gray-600  w-20 h-8 text-white"
+                          className="hover:bg-gray-400 bg-gray-600  w-20 h-8 text-white"
                           onClick={handleClose}
                         >
                           Cancel

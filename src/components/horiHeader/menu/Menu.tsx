@@ -42,7 +42,11 @@ export default function Menu() {
         onClick={() => switchDisplayComponent(index)}
         className="menu-element-content"
       >
-        <FontAwesomeIcon icon={menuElement.icon}></FontAwesomeIcon>
+        <FontAwesomeIcon
+          icon={menuElement.icon}
+          width={20}
+          height={20}
+        ></FontAwesomeIcon>
         <Box>
           <p>{menuElement.title}</p>
         </Box>
@@ -53,15 +57,16 @@ export default function Menu() {
         ></FontAwesomeIcon>
       </Box>
       {menuElement.child?.map((menuChild, index2) => (
-        <Box
+        <Link
+          href={menuChild.url}
           className={`menu-element-child-container ${
             route.pathname === menuChild.url ? "bg-gray-800" : ""
           }`}
           key={index2}
           sx={{ display: displayMatrix[index] == 1 ? "flex" : "none" }}
         >
-          <Link href={menuChild.url}>{menuChild.title}</Link>
-        </Box>
+          {menuChild.title}
+        </Link>
       ))}
     </Box>
   ));

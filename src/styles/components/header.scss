@@ -132,12 +132,11 @@ $gray-color: rgb(160, 167, 179);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  width: 24%;
   height: 100vh;
-  background-color: #3c4b64;
+  background-color: #101924;
   .logo-wrapper {
     padding: 10px 20px;
-    background-color: rgb(48, 60, 84);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -157,6 +156,7 @@ $gray-color: rgb(160, 167, 179);
   height: 100%;
   .menu-element-wrapper {
     width: 100%;
+    margin-bottom: 10px;
     .menu-element-title {
       -webkit-user-select: none; /* Safari */
       -ms-user-select: none; /* IE 10 and IE 11 */
@@ -185,7 +185,7 @@ $gray-color: rgb(160, 167, 179);
         p {
           text-transform: capitalize;
           color: $gray-color;
-          font-size: 20px;
+          font-size: 15px;
         }
       }
       svg:last-child {
@@ -202,19 +202,17 @@ $gray-color: rgb(160, 167, 179);
     }
     .menu-element-child-container {
       color: white;
-      padding: 3px 50px;
+      padding: 3px 46px;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
       -webkit-user-select: none; /* Safari */
       -ms-user-select: none; /* IE 10 and IE 11 */
       user-select: none; /* Standard syntax */
-      a {
-        text-decoration: none;
-        text-transform: capitalize;
-        color: $gray-color;
-        font-size: 16px;
-      }
+      text-decoration: none;
+      text-transform: capitalize;
+      color: $gray-color;
+      font-size: 15px;
     }
     .menu-element-child-container:hover {
       cursor: pointer;
