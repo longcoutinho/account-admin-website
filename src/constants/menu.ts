@@ -1,4 +1,4 @@
-import { faCartShopping, faCoins } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCoins, faUser } from "@fortawesome/free-solid-svg-icons";
 export const menuBar = [
   {
     title: "Quản lý sản phẩm",
@@ -33,8 +33,22 @@ export const menuBar = [
         url: "/inventory/add",
       },
       {
-        title: "Danh sách tài khoản",
+        title: "San pham trong kho",
         url: "/inventory/list",
+      },
+    ],
+  },
+  {
+    title: "Quản lý tài khoản",
+    icon: faUser,
+    child: [
+      {
+        title: "Tai khoan nguoi dung",
+        url: "/user/account-user",
+      },
+      {
+        title: "Tai khoan admin",
+        url: "/user/account-admin",
       },
     ],
   },
