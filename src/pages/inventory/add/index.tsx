@@ -12,6 +12,11 @@ export default function Add() {
   const [password, setPassword] = useState<string>("");
   const [itemId, setItemId] = useState<number>();
 
+  const reset = () => {
+    setUsername('');
+    setPassword('');
+  }
+
   const handleAddInventory = async () => {
     try {
       const res = await createNewAccount({
@@ -21,6 +26,7 @@ export default function Add() {
       });
       if (res.status === HTTP_STATUS.OK) {
         toast.success("Thêm thành công");
+        reset();
       } else {
         toast.error("Thêm không thành công");
       }
@@ -33,6 +39,7 @@ export default function Add() {
   return (
     <Page title={PAGE_TITLE.HOME} menuIndex={1}>
       <FormControl className=" w-4/5 flex flex-col gap-4 mb-4">
+        <SelectAllItem changeItem={setItemId} />
         <TextField
           label="Tài khoản"
           className="w-full"
@@ -41,19 +48,17 @@ export default function Add() {
         ></TextField>
         <TextField
           name="password"
-          type="password"
           label="Mật khẩu"
           className="w-full"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></TextField>
-        <SelectAllItem changeItem={setItemId} />
         <Button
           className="w-1/6 bg-blue-500"
           variant="contained"
           onClick={handleAddInventory}
         >
-          Add
+          Thêm tài khoản
         </Button>
       </FormControl>
     </Page>

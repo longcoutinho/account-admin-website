@@ -15,14 +15,15 @@ import {
     TableRow, TextField,
     Typography,
 } from "@mui/material";
-import {ITopUpList, TopUpRequest} from "@/interfaces/request";
+import {ISaleOrderList, ITopUpList, SaleOrderRequest, TopUpRequest} from "@/interfaces/request";
 import {confirmTopUpRequest, getAllTopUpRequest, getReportTopUp} from "@/services/top-up";
 import { TaskAltOutlined } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import {formatDateTime, formatVND} from "@/constants/FnCommon";
+import {getAllSaleOrder} from "@/services/sale-order";
 
-export default function TopUpStats() {
-    const [list, setList] = useState<ITopUpList[]>([]);
+export default function SaleOrderStats() {
+    const [list, setList] = useState<ISaleOrderList[]>([]);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
         null
     );
@@ -39,15 +40,15 @@ export default function TopUpStats() {
     }, []);
 
     const renderListTopUp = () => {
-        const params: TopUpRequest = {
+        const params: SaleOrderRequest = {
             transId: transactionId != "" ? transactionId : null,
             username: username != "" ? username : null,
             status: 1
         }
-        getAllTopUpRequest(params)
+        getAllSaleOrder(params)
             .then((res) => {
                 if (res.status == HTTP_STATUS.OK) {
-                    setList(res.data.listTopUp);
+                    setList(res.data.listSaleOrder);
                     setTotalRequest(res.data.totalRequest);
                     setTotalAmount(res.data.totalAmount);
                 }
@@ -67,21 +68,21 @@ export default function TopUpStats() {
 
     return (
         <Page title={PAGE_TITLE.HOME} menuIndex={1}>
-            <Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">
-                <Box className="w-[calc(50%-2rem)]">
-                    <TextField size="small" type="small" className="w-full" label="Tên đăng nhập" value={username}
-                               onChange={(e) => setUsername(e.target.value)}
-                    ></TextField>
-                </Box>
-                <Box className="w-[calc(50%-2rem)]">
-                    <TextField size="small" type="small" className="w-full" label="Mã giao dịch" value={transactionId}
-                               onChange={(e) => setTransactionId(e.target.value)}
-                    ></TextField>
-                </Box>
-                <Box className="w-full flex flex-row items-center">
-                    <Button variant="outlined" className="w-1/10" onClick={() => renderListTopUp()}>Tìm kiếm</Button>
-                </Box>
-            </Box>
+            {/*<Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">*/}
+            {/*    <Box className="w-[calc(50%-2rem)]">*/}
+            {/*        <TextField size="small" type="small" className="w-full" label="Tên đăng nhập" value={username}*/}
+            {/*                   onChange={(e) => setUsername(e.target.value)}*/}
+            {/*        ></TextField>*/}
+            {/*    </Box>*/}
+            {/*    <Box className="w-[calc(50%-2rem)]">*/}
+            {/*        <TextField size="small" type="small" className="w-full" label="Mã giao dịch" value={transactionId}*/}
+            {/*                   onChange={(e) => setTransactionId(e.target.value)}*/}
+            {/*        ></TextField>*/}
+            {/*    </Box>*/}
+            {/*    <Box className="w-full flex flex-row items-center">*/}
+            {/*        <Button variant="outlined" className="w-1/10" onClick={() => renderListTopUp()}>Tìm kiếm</Button>*/}
+            {/*    </Box>*/}
+            {/*</Box>*/}
             <Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">
                 {list?.length > 0 ? (
                     <TableContainer component={Paper}>
@@ -91,7 +92,7 @@ export default function TopUpStats() {
                                     <TableCell>STT</TableCell>
                                     <TableCell>Mã giao dịch</TableCell>
                                     <TableCell>Tên đăng nhập</TableCell>
-                                    <TableCell>Phương thức</TableCell>
+                                    <TableCell>Tên sản phẩm</TableCell>
                                     <TableCell>Số tiền</TableCell>
                                     <TableCell>Thời gian</TableCell>
                                     {/*<TableCell>Xác nhận</TableCell>*/}
@@ -106,17 +107,13 @@ export default function TopUpStats() {
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{row.id}</TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.username}
+                                            {row.userId}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.method === 1
-                                                ? "Internet Banking"
-                                                : row.method === 2
-                                                    ? "MoMo"
-                                                    : ""}
+                                            {row.itemName}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.amount}
+                                            {formatVND(row.price)}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             {formatDateTime(row.createDate)}
@@ -168,8 +165,8 @@ export default function TopUpStats() {
                 )}
             </Box>
             <Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">
-                <p className="text-blue-500">Tổng tiền: {formatVND(totalAmount, false)}</p>
-                <p className="text-blue-500">Số luợt nạp tiền: {totalRequest}</p>
+                <p className="text-blue-500">Tổng doanh thu: {formatVND(totalAmount, false)}</p>
+                <p className="text-blue-500">Số luợt mua hàng: {totalRequest}</p>
             </Box>
         </Page>
     );

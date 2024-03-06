@@ -20,7 +20,7 @@ export const menuBar = [
   },
   {
     title: "Quản lý khách hàng",
-    icon: faCoins,
+    icon: faUser,
     child: [
       {
         title: "Yêu cầu nạp tiền",
@@ -29,6 +29,10 @@ export const menuBar = [
       {
         title: "Thống kê nạp tiền",
         url: "/customer/top-up-stats",
+      },
+      {
+        title: "Thống kê đơn hàng",
+        url: "/customer/sale-order-stats",
       },
     ],
   },
@@ -41,7 +45,7 @@ export const menuBar = [
         url: "/inventory/add",
       },
       {
-        title: "San pham trong kho",
+        title: "Kho tài khoản",
         url: "/inventory/list",
       },
     ],
