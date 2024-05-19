@@ -55,12 +55,22 @@ export interface ISaleOrderItem {
 
 export interface ITopUpList {
   listTopUp: ITopUpItem[];
+  id: string;
+  username: string;
+  method: number;
   totalAmount: number;
+  amount: number;
+  createDate: string;
   totalRequest: number;
 }
 
 export interface ISaleOrderList {
+  id: string;
+  userId: string;
+  itemName: string;
+  createDate: string;
   listSaleOrder: ISaleOrderItem[];
+  price: number;
   totalAmount: number;
   totalRequest: number;
 }

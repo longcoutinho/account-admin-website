@@ -82,7 +82,7 @@ export default function SaleOrderStats() {
                       {row.itemName}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {formatVND(row.price)}
+                      {formatVND(row.price, false)}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {formatDateTime(row.createDate)}
