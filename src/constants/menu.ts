@@ -1,81 +1,61 @@
 import {
   faCartShopping,
   faCoins,
+  faGamepad,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 export const menuBar = [
   {
-    title: "Quản lý sản phẩm",
+    title: "Quản lý thẻ nạp",
     icon: faCartShopping,
-    child: [
-      {
-        title: "Loại sản phẩm",
-        url: "/item/categories",
-      },
-      {
-        title: "Thêm sản phẩm",
-        url: "/item/add",
-      },
-    ],
-  },
-  {
-    title: "Quản lý khách hàng",
-    icon: faUser,
-    child: [
-      {
-        title: "Yêu cầu nạp tiền",
-        url: "/customer/top-up-list",
-      },
-      {
-        title: "Thống kê nạp tiền",
-        url: "/customer/top-up-stats",
-      },
-      {
-        title: "Thống kê đơn hàng",
-        url: "/customer/sale-order-stats",
-      },
-    ],
-  },
-  {
-    title: "Quản lý kho",
-    icon: faCartShopping,
-    child: [
-      {
-        title: "Nhập kho",
-        url: "/inventory/add",
-      },
-      {
-        title: "Kho tài khoản",
-        url: "/inventory/list",
-      },
-    ],
+    url: "/card",
   },
   {
     title: "Quản lý tài khoản",
     icon: faUser,
-    child: [
-      {
-        title: "Tài khoản người dùng",
-        url: "/user/account-user",
-      },
-      {
-        title: "Tài khoản admin",
-        url: "/user/account-admin",
-      },
-    ],
+    url: "/user/account-user",
+  },
+  {
+    title: "Lords mobile",
+    icon: faGamepad,
+    url: "/user/account-user",
+  },
+  {
+    title: "Castle cash",
+    icon: faGamepad,
+    url: "/user/account-user",
   },
   // {
-  //   title: "Thống kê",
+  //   title: "Quản lý khách hàng",
   //   icon: faUser,
   //   child: [
   //     {
-  //       title: "Nạp tiền",
-  //       url: "/report/top-up",
+  //       title: "Yêu cầu nạp tiền",
+  //       url: "/customer/top-up-list",
   //     },
   //     {
-  //       title: "Đơn hàng",
-  //       url: "/report/sale-order",
+  //       title: "Thống kê nạp tiền",
+  //       url: "/customer/top-up-stats",
+  //     },
+  //     {
+  //       title: "Thống kê đơn hàng",
+  //       url: "/customer/sale-order-stats",
   //     },
   //   ],
   // },
+  // {
+  //   title: "Quản lý kho",
+  //   icon: faCartShopping,
+  //   child: [
+  //     {
+  //       title: "Nhập kho",
+  //       url: "/inventory/add",
+  //     },
+  //     {
+  //       title: "Kho tài khoản",
+  //       url: "/inventory/list",
+  //     },
+  //   ],
+  // },
+  //
 ];

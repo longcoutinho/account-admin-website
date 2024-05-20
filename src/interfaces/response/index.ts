@@ -22,7 +22,18 @@ export interface Item {
   title?: string;
   titleImageUrlStream?: string;
 }
+export interface ICardsRes {
+  id: number;
+  name: string;
+  image: string;
+}
 
+export interface IItemCardRes {
+  id: number;
+  price: number;
+  cardId: number;
+  code: string;
+}
 export interface Course {
   title: string;
   teacher: string;

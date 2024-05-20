@@ -1,25 +1,25 @@
-import {Course} from "@/interfaces/response";
-import {PATH_PAGE} from "@/routes/path";
+import { Course } from "@/interfaces/response";
+import { PATH_PAGE } from "@/routes/path";
 
 export enum Backend {
-  BASE_URL = 'http://58.187.168.147:8989',
+  BASE_URL = "http://58.187.181.234:8989",
   // BASE_URL = 'http://10.248.158.39:8989',
   // BASE_URL = 'http://localhost:8989',
-  USER_SERVICE = BASE_URL + '/user',
-  ITEM_SERVICE = BASE_URL + '/item',
-  IMAGE_SERVICE = BASE_URL + '/image',
-  TOPUP_SERVICE = BASE_URL + '/top-up',
-  REPORT_SERVICE = BASE_URL + '/report',
-  SALE_ORDER_SERVICE = BASE_URL + '/sale-order',
-  ACCOUNT_SERVICE = BASE_URL + '/stock-account',
+  USER_SERVICE = BASE_URL + "/user",
+  ITEM_SERVICE = BASE_URL + "/item",
+  IMAGE_SERVICE = BASE_URL + "/image",
+  TOPUP_SERVICE = BASE_URL + "/top-up",
+  REPORT_SERVICE = BASE_URL + "/report",
+  SALE_ORDER_SERVICE = BASE_URL + "/sale-order",
+  ACCOUNT_SERVICE = BASE_URL + "/stock-account",
 }
 
 export enum Frontend {
-  BASE_URL = 'http://58.187.168.147:3001',
+  BASE_URL = "http://58.187.168.147:3001",
   // BASE_URL = 'http://localhost:3001',
-  ADD_ITEM_PAGE = BASE_URL + '/item/add',
-  EDIT_ITEM_PAGE = BASE_URL + '/item/edit',
-  EDIT_ACCOUNT_PAGE = BASE_URL + '/user/account-user/edit'
+  ADD_ITEM_PAGE = BASE_URL + "/item/add",
+  EDIT_ITEM_PAGE = BASE_URL + "/item/edit",
+  EDIT_ACCOUNT_PAGE = BASE_URL + "/user/account-user/edit",
 }
 export enum HTTP_STATUS {
   OK = 200,
@@ -29,7 +29,7 @@ export enum PAGE_TITLE {
   HOME = "Home",
   LAPLA = "Lap la so phong thuy",
   ALL_PRODUCTS = "All Products",
-  EDIT_ITEM = "Edit Item"
+  EDIT_ITEM = "Edit Item",
 }
 
 export const HomePage = {
@@ -37,7 +37,7 @@ export const HomePage = {
   numBotPosts: 5,
   numHotPosts: 5,
   numItem: 4,
-  optionTopPosts:  {
+  optionTopPosts: {
     slidesPerView: 1,
     spaceBetween: 50,
     breakpoints: {
@@ -60,13 +60,13 @@ export const HomePage = {
         slidesPerView: 1,
       },
     },
-  }
-}
+  },
+};
 
 export const ServiceType = {
   POSTS: 0,
   ITEM: 1,
-}
+};
 
 export enum URL {
   BASE_URL = "",
@@ -88,7 +88,7 @@ export enum TypeService {
 export enum ItemService {
   getItems = "/item",
   DETAIL = "/detail",
-  getItemDetail = "/item/detail"
+  getItemDetail = "/item/detail",
 }
 
 export const HOME_PAGE_DISPLAY_ITEM = 3;
@@ -128,29 +128,33 @@ export const listItems = [
   },
 ];
 
-export const listCourse : Course[] = [
+export const listCourse: Course[] = [
   {
     title: "Lớp 1",
     teacher: "Kim ca",
-    titleImageUrlStream: "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
+    titleImageUrlStream:
+      "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
     videoTime: 20,
   },
   {
     title: "Lớp 1",
     teacher: "Kim ca",
-    titleImageUrlStream: "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
+    titleImageUrlStream:
+      "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
     videoTime: 20,
   },
   {
     title: "Lớp 1",
     teacher: "Kim ca",
-    titleImageUrlStream: "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
+    titleImageUrlStream:
+      "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
     videoTime: 20,
   },
   {
     title: "Lớp 1",
     teacher: "Kim ca",
-    titleImageUrlStream: "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
+    titleImageUrlStream:
+      "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg?cs=srgb&dl=pexels-engin-akyurt-1486861.jpg&fm=jpg",
     videoTime: 20,
   },
 ];
@@ -159,22 +163,22 @@ export const listServicesTitle = [
   {
     img: "https://www.kimca.net/wp-content/uploads/2022/02/163418138042938300_a640x364-1-364x363.jpg",
     title: "Làm viên chức",
-    content: "Bạn muốn biết hôn nhân mình ra sao?"
+    content: "Bạn muốn biết hôn nhân mình ra sao?",
   },
   {
     img: "https://www.kimca.net/wp-content/uploads/2022/02/163418138042938300_a640x364-1-364x363.jpg",
     title: "Tình duyên",
-    content: "Bạn muốn biết hôn nhân mình ra sao?"
+    content: "Bạn muốn biết hôn nhân mình ra sao?",
   },
   {
     img: "https://www.kimca.net/wp-content/uploads/2022/02/163418138042938300_a640x364-1-364x363.jpg",
     title: "Làm kinh doanh",
-    content: "Bạn muốn biết hôn nhân mình ra sao?"
+    content: "Bạn muốn biết hôn nhân mình ra sao?",
   },
   {
     img: "https://www.kimca.net/wp-content/uploads/2022/02/163418138042938300_a640x364-1-364x363.jpg",
     title: "Làm viên chức",
-    content: "Bạn muốn xem thời vận sắp tới có thuận lợi để đầu tư không?"
+    content: "Bạn muốn xem thời vận sắp tới có thuận lợi để đầu tư không?",
   },
 ];
 
@@ -211,7 +215,7 @@ export const MenuTitle: any = [
     title: "About Us",
     redirect_link: PATH_PAGE.user.tab5,
     drop_down: false,
-  }
+  },
 ];
 
-export const DATE_TIME_FORMAT = "HH:mm:ss DD-MM-YYYY"
+export const DATE_TIME_FORMAT = "HH:mm:ss DD-MM-YYYY";

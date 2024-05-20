@@ -22,9 +22,12 @@ export default function Menu() {
 
   const listMenu = menuBar.map((menuElement, index) => (
     <Box key={index} className="menu-element-wrapper">
-      <Box
+      <Link
+        href={menuElement.url}
         onClick={() => switchDisplayComponent(index)}
-        className="menu-element-content"
+        className={`menu-element-content no-underline ${
+          route.pathname === menuElement.url ? "bg-gray-800" : ""
+        }`}
       >
         <FontAwesomeIcon
           icon={menuElement.icon}
@@ -34,18 +37,7 @@ export default function Menu() {
         <Box>
           <p>{menuElement.title}</p>
         </Box>
-      </Box>
-      {menuElement.child?.map((menuChild, index2) => (
-        <Link
-          href={menuChild.url}
-          className={`menu-element-child-container block ${
-            route.pathname === menuChild.url ? "bg-gray-800" : ""
-          }`}
-          key={index2}
-        >
-          {menuChild.title}
-        </Link>
-      ))}
+      </Link>
     </Box>
   ));
   return <Box className="big-menu">{listMenu}</Box>;
