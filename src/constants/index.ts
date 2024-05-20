@@ -2,7 +2,7 @@ import { Course } from "@/interfaces/response";
 import { PATH_PAGE } from "@/routes/path";
 
 export enum Backend {
-  BASE_URL = "http://58.187.231.220:8989",
+  BASE_URL = "http://58.187.181.234:8989",
   // BASE_URL = 'http://10.248.158.39:8989',
   // BASE_URL = 'http://localhost:8989',
   USER_SERVICE = BASE_URL + "/user",

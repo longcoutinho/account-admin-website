@@ -26,7 +26,7 @@ import { ResponseUser } from "@/interfaces/response";
 import { formatDateTime, formatVND, redirectUrl } from "@/constants/FnCommon";
 import { useRouter } from "next/router";
 
-const style = {
+export const styleModal = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
@@ -175,7 +175,7 @@ export default function UserAccounts(props: any) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style} className="flex gap-4 flex-col">
+          <Box sx={styleModal} className="flex gap-4 flex-col">
             <Typography
               id="modal-modal-title"
               variant="h5"
@@ -184,7 +184,7 @@ export default function UserAccounts(props: any) {
             >
               Điều chỉnh số dư
             </Typography>
-            <p>Số dư: {item?.balance}</p>
+            <p>Số dư: {item?.balance.toLocaleString("en-US")}đ</p>
             <TextField
               className="w-full"
               id="outlined-select-currency"
@@ -236,7 +236,7 @@ export default function UserAccounts(props: any) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style} className="flex gap-4 flex-col">
+          <Box sx={styleModal} className="flex gap-4 flex-col">
             <Typography
               id="modal-modal-title"
               variant="h5"
