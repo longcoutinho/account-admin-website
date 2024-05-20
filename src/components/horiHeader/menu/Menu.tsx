@@ -25,7 +25,9 @@ export default function Menu() {
       <Link
         href={menuElement.url}
         onClick={() => switchDisplayComponent(index)}
-        className="menu-element-content no-underline	"
+        className={`menu-element-content no-underline ${
+          route.pathname === menuElement.url ? "bg-gray-800" : ""
+        }`}
       >
         <FontAwesomeIcon
           icon={menuElement.icon}
