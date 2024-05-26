@@ -37,7 +37,7 @@ export default function Login() {
           if (res.status == HTTP_STATUS.OK) {
             console.log(res.data);
             saveUserToSessionStorage(res.data);
-            redirectUrl(route, "/item/categories", null);
+            redirectUrl(route, "/card", null);
           } else {
             setNotify(res.response.data);
             setNotifyColor("red");
