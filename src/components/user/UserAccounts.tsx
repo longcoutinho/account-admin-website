@@ -20,7 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Edit, Search } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { adjustBalance, getUserAccount } from "@/services/userService";
 import { ResponseUser } from "@/interfaces/response";
@@ -111,12 +111,16 @@ export default function UserAccounts(props: any) {
 
   return (
     <Box>
-      <Input
-        placeholder="Search user"
-        type="text"
-        className="mb-4"
-        onChange={handleSearchUser}
-      />
+      <div className="w-full flex justify-end">
+        <Input
+          placeholder="Search user"
+          type="text"
+          className="mb-4 border border-gray-500 px-4 w-72 rounded-md"
+          onChange={handleSearchUser}
+          color="primary"
+          endAdornment={<Search />}
+        />
+      </div>
       {list?.length > 0 ? (
         <>
           <TableContainer component={Paper}>
