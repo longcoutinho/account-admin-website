@@ -84,7 +84,7 @@ export default function Login() {
           <Box className="forgot-password-container">
             <Box className="remember-me-container">
               <input type={"checkbox"} />
-              <label>keep me logged in</label>
+              <label>Keep me logged in</label>
             </Box>
             <Box className="forgot-pass-container">
               <Link href={"/signup"}>forgot password?</Link>

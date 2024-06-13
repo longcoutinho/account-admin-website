@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Input,
   MenuItem,
   Modal,
   Pagination,
@@ -46,6 +47,7 @@ export default function UserAccounts(props: any) {
   const [loading, setLoading] = React.useState(false);
   const [change, setChange] = React.useState<string>("");
   const [balance, setBalance] = useState("");
+  const [userName, setUserName] = useState("");
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -55,7 +57,7 @@ export default function UserAccounts(props: any) {
     if (props.type != null) {
       renderListAccount();
     }
-  }, [props.type]);
+  }, [props.type, userName]);
 
   const handleConfirm = async () => {
     setLoading(true);
@@ -92,7 +94,7 @@ export default function UserAccounts(props: any) {
   const router = useRouter();
 
   const renderListAccount = () => {
-    getUserAccount(props.type)
+    getUserAccount(props.type, userName)
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
           setList(res.data);
@@ -103,8 +105,18 @@ export default function UserAccounts(props: any) {
       });
   };
 
+  const handleSearchUser = (e: any) => {
+    setUserName(e.target.value);
+  };
+
   return (
     <Box>
+      <Input
+        placeholder="Search user"
+        type="text"
+        className="mb-4"
+        onChange={handleSearchUser}
+      />
       {list?.length > 0 ? (
         <>
           <TableContainer component={Paper}>
@@ -205,6 +217,15 @@ export default function UserAccounts(props: any) {
               placeholder="Nhập số"
               onChange={(e) => setBalance(e.target.value)}
             />
+            {item?.balance !== undefined && change !== "" && balance !== "" && (
+              <p>
+                Số dư sau điều chỉnh:{" "}
+                {change === "inc"
+                  ? (item?.balance + Number(balance)).toLocaleString("en-US")
+                  : (item?.balance - Number(balance)).toLocaleString("en-US")}
+                đ
+              </p>
+            )}
             <Box className="flex gap-5 px-10 mt-4">
               <Button
                 className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
