@@ -2,7 +2,7 @@ import { Course } from "@/interfaces/response";
 import { PATH_PAGE } from "@/routes/path";
 
 export enum Backend {
-  BASE_URL = "http://58.187.181.234:8989",
+  BASE_URL = "https://elitagame.online",
   // BASE_URL = 'http://10.248.158.39:8989',
   // BASE_URL = 'http://localhost:8989',
   USER_SERVICE = BASE_URL + "/user",
@@ -15,7 +15,7 @@ export enum Backend {
 }
 
 export enum Frontend {
-  BASE_URL = "http://58.187.168.147:3001",
+  BASE_URL = "https://longhvh.click",
   // BASE_URL = 'http://localhost:3001',
   ADD_ITEM_PAGE = BASE_URL + "/item/add",
   EDIT_ITEM_PAGE = BASE_URL + "/item/edit",
