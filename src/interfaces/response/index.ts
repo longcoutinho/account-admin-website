@@ -73,4 +73,6 @@ export interface ResponseUser {
   username: string;
   balance: number;
   createDate: string;
+  userId: string;
+  email: string;
 }
