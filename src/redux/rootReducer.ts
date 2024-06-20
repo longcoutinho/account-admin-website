@@ -1,33 +1,10 @@
-import { combineReducers } from "redux";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import state from "./slices/state";
-
-const createNoopStorage = () => ({
-  getItem() {
-    return Promise.resolve(null);
-  },
-  setItem(_key: any, value: any) {
-    return Promise.resolve(value);
-  },
-  removeItem() {
-    return Promise.resolve();
-  },
-});
-
-const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
-    : createNoopStorage();
-
-const rootPersistConfig = {
-  key: "root",
-  storage,
-  keyPrefix: "redux-",
-  whitelist: [],
-};
+import { combineReducers } from "@reduxjs/toolkit";
+import typeProduct from "./slices/typeProduct";
+import product from "./slices/product";
 
 const rootReducer = combineReducers({
-  state: state,
+  typeProduct,
+  product,
 });
 
-export { rootPersistConfig, rootReducer };
+export default rootReducer;

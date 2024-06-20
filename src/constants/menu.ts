@@ -16,6 +16,11 @@ export const menuBar = [
     url: "/user/account-user",
   },
   {
+    title: "Quản lý sản phẩm",
+    icon: faUser,
+    url: "/product",
+  },
+  {
     title: "Lords mobile",
     icon: faGamepad,
     url: "/user/account-user",
