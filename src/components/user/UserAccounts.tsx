@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Input,
   MenuItem,
   Modal,
   Pagination,
@@ -19,7 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Edit, Search } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { adjustBalance, getUserAccount } from "@/services/userService";
 import { ResponseUser } from "@/interfaces/response";
@@ -39,6 +40,7 @@ export const styleModal = {
 };
 
 export default function UserAccounts(props: any) {
+  const pageSize = 10;
   const [list, setList] = useState<ResponseUser[]>([]);
   const [open, setOpen] = React.useState(false);
   const [openPW, setOpenPW] = React.useState(false);
@@ -46,6 +48,7 @@ export default function UserAccounts(props: any) {
   const [loading, setLoading] = React.useState(false);
   const [change, setChange] = React.useState<string>("");
   const [balance, setBalance] = useState("");
+  const [userName, setUserName] = useState("");
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -55,7 +58,7 @@ export default function UserAccounts(props: any) {
     if (props.type != null) {
       renderListAccount();
     }
-  }, [props.type]);
+  }, [props.type, userName]);
 
   const handleConfirm = async () => {
     setLoading(true);
@@ -92,7 +95,7 @@ export default function UserAccounts(props: any) {
   const router = useRouter();
 
   const renderListAccount = () => {
-    getUserAccount(props.type)
+    getUserAccount(props.type, userName)
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
           setList(res.data);
@@ -103,63 +106,93 @@ export default function UserAccounts(props: any) {
       });
   };
 
+  const handleSearchUser = (e: any) => {
+    setUserName(e.target.value);
+  };
+
   return (
     <Box>
+      <div className="w-full flex justify-end">
+        <Input
+          placeholder="Search user"
+          type="text"
+          className="mb-4 border border-gray-500 px-4 w-72 rounded-md"
+          onChange={handleSearchUser}
+          color="primary"
+          endAdornment={<Search />}
+        />
+      </div>
       {list?.length > 0 ? (
         <>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 1080 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>STT</TableCell>
+                  <TableCell>UserID</TableCell>
                   <TableCell>Tên đăng nhập</TableCell>
+                  <TableCell>Email</TableCell>
                   <TableCell>Số dư</TableCell>
                   <TableCell>Ngày tạo tài khoản</TableCell>
                   <TableCell>Thay đổi mật khẩu</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {list.map((row, index) => (
-                  <TableRow
-                    key={row.username}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.username}</TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      onClick={() => {
-                        handleOpen();
-                        setItem(row);
-                      }}
+                {list
+                  ?.slice(
+                    (page - 1) * pageSize,
+                    (page - 1) * pageSize + pageSize
+                  )
+                  .map((row, index) => (
+                    <TableRow
+                      key={row.username}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {formatVND(row.balance, false)}
-                      <Edit
-                        sx={{
-                          width: "14px",
-                          height: "14px",
-                          marginBottom: "4px",
-                          marginLeft: "4px",
-                          cursor: "pointer",
+                      <TableCell sx={{ width: "240px" }}>
+                        {row?.userId}
+                      </TableCell>
+                      <TableCell>{row.username}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        onClick={() => {
+                          handleOpen();
+                          setItem(row);
                         }}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {formatDateTime(row.createDate)}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Button className="bg-transparent" onClick={handleOpenPW}>
-                        <Edit />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      >
+                        {formatVND(row.balance, false)}
+                        <Edit
+                          sx={{
+                            width: "14px",
+                            height: "14px",
+                            marginBottom: "4px",
+                            marginLeft: "4px",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {formatDateTime(row.createDate)}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{ width: "100px" }}
+                      >
+                        <Button
+                          className="bg-transparent"
+                          onClick={handleOpenPW}
+                        >
+                          <Edit />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
           <Pagination
-            count={10}
+            count={Math.ceil(list?.length / pageSize)}
             page={page}
             onChange={handleChange}
             className="custom-pagination"
@@ -205,6 +238,15 @@ export default function UserAccounts(props: any) {
               placeholder="Nhập số"
               onChange={(e) => setBalance(e.target.value)}
             />
+            {item?.balance !== undefined && change !== "" && balance !== "" && (
+              <p>
+                Số dư sau điều chỉnh:{" "}
+                {change === "inc"
+                  ? (item?.balance + Number(balance)).toLocaleString("en-US")
+                  : (item?.balance - Number(balance)).toLocaleString("en-US")}
+                đ
+              </p>
+            )}
             <Box className="flex gap-5 px-10 mt-4">
               <Button
                 className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
