@@ -264,7 +264,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
           </form>
         ) : (
           <>
-            <h2>Thumbnail </h2>
+            <h2>Add list image </h2>
             <input
               type="file"
               accept="image/*"

@@ -110,7 +110,7 @@ export default function ProductList() {
                     <Button
                       aria-describedby={idDel}
                       className="bg-transparent"
-                      onClick={(e) => handleClickDel(e, row?.id)}
+                      // onClick={(e) => handleClickDel(e, row?.id)}
                     >
                       <Delete />
                     </Button>

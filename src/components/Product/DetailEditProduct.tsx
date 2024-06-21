@@ -9,7 +9,7 @@ import {
   requestCreateProduct,
   requestGetListPaymentMethod,
 } from "@/services/product";
-import { HTTP_STATUS } from "@/constants";
+import { Backend, HTTP_STATUS } from "@/constants";
 import { IProductReq } from "@/interfaces/request/product";
 import TextEditor from "../Editor";
 
@@ -32,6 +32,7 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
     [k: number]: boolean;
   }>({});
   const [des, setDes] = useState<string>("");
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   const defaultValues = useMemo(
     () => ({
@@ -68,9 +69,13 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
   useEffect(() => {
     reset(defaultValues);
   }, [defaultValues, reset]);
+
   useEffect(() => {
     if (productDetail && productDetail?.categoryList) {
       setListCategory(productDetail?.categoryList?.map((e) => e?.name));
+    }
+    if (productDetail && productDetail?.imagePathList) {
+      setPreviewUrls(productDetail?.imagePathList);
     }
   }, [productDetail]);
 
@@ -219,7 +224,42 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
                 />
               </div>
             ))}
-            <TextField type="submit" />
+            <>
+              <h2>Add list image </h2>
+              <input
+                type="file"
+                accept="image/*"
+                // onChange={handleChangeFile}
+                multiple
+                disabled
+              />
+              {previewUrls && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                  {previewUrls.map((url, index) => (
+                    <Box
+                      key={index}
+                      component="img"
+                      src={Backend.BASE_URL + url}
+                      alt={`Preview ${index + 1}`}
+                      sx={{
+                        width: 100,
+                        height: 100,
+                        objectFit: "cover",
+                        borderRadius: 1,
+                      }}
+                    />
+                  ))}
+                </Box>
+              )}
+
+              {/* <Button
+              onClick={handleUploadImage}
+              className=" !hover:bg-blue-400 !bg-blue-600 !w-fit !px-4 ml-auto h-10 !text-white"
+            >
+              Upload
+            </Button> */}
+            </>
+            <TextField type="submit" disabled />
           </div>
         </form>
       </Box>
