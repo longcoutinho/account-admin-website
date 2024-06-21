@@ -16,3 +16,20 @@ export interface IPaymentMethodRes {
   image: string;
   code: string;
 }
+
+export interface IProductDetailRes {
+  name: string;
+  description: string;
+  imagePathList: string[];
+  categoryList: {
+    id: number;
+    productId: number;
+    name: string;
+  }[];
+  feeList: {
+    id: number;
+    productId: number;
+    price: number | undefined;
+    paymentCode: string;
+  }[];
+}

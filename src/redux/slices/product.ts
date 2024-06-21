@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
 import { getListProduct, requestGetDetailProduct } from "@/services/product";
-import { IProductRes } from "@/interfaces/response/product";
+import { IProductDetailRes, IProductRes } from "@/interfaces/response/product";
 
 interface IState {
   product: IProductRes[];
-  productDetail: Partial<IProductRes>;
+  productDetail: Partial<IProductDetailRes>;
   loading: boolean;
   error: string;
 }
@@ -65,7 +65,10 @@ const slice = createSlice({
     );
     builder.addCase(
       fetchDetailProduct.fulfilled,
-      (state: WritableDraft<IState>, action: PayloadAction<IProductRes>) => {
+      (
+        state: WritableDraft<IState>,
+        action: PayloadAction<IProductDetailRes>
+      ) => {
         state.loading = false;
         state.productDetail = action.payload;
         state.error = "";

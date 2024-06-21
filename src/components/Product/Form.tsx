@@ -37,8 +37,8 @@ const FormProduct = ({ open, onClose }: IProps) => {
   const { category } = useSelector((state: RootState) => state.typeProduct);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [inputCate, setInputCate] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [fileDetail, setFileDetail] = useState<File | null>(null);
+  const [file, setFile] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [listPaymentMethod, setListPaymentMethod] = useState<
     IPaymentMethodRes[]
   >([]);
@@ -122,21 +122,23 @@ const FormProduct = ({ open, onClose }: IProps) => {
   };
 
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.currentTarget.files;
-    if (files) setFile(files[0] as any);
-  };
+    const files = Array.from(e.target.files || []);
+    setFile(files);
 
-  const handleChangeFileDetail = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.currentTarget.files;
-    if (files) setFileDetail(files[0] as any);
+    const urls = files.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
   };
+  useEffect(() => {
+    return () => {
+      previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previewUrls]);
 
   const handleUploadImage = async () => {
     try {
       if (prodId && file) {
         const body = new FormData();
-        body.append("imagesList", file as File);
-        body.append("imagesList", fileDetail as File);
+        file?.map((e) => body.append("imagesList", e as any));
         const res = await requestCreateImageProduct(prodId, body);
         if (res?.status === HTTP_STATUS.OK) {
           onClose();
@@ -179,11 +181,12 @@ const FormProduct = ({ open, onClose }: IProps) => {
                 label="Name"
               />
               {errors.name && <p>Name is required.</p>}
+
               <Box>
                 <TextEditor
                   value={des}
                   onChange={(e: any) => setDes(e)}
-                  label="Short description"
+                  label="Description"
                 />
               </Box>
               {errors.description && <p>Short description is required.</p>}
@@ -268,23 +271,25 @@ const FormProduct = ({ open, onClose }: IProps) => {
               onChange={handleChangeFile}
               multiple
             />
-            {file && (
-              <img src={URL.createObjectURL(file)} width={200} height={200} />
+            {previewUrls && (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                {previewUrls.map((url, index) => (
+                  <Box
+                    key={index}
+                    component="img"
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    sx={{
+                      width: 100,
+                      height: 100,
+                      objectFit: "cover",
+                      borderRadius: 1,
+                    }}
+                  />
+                ))}
+              </Box>
             )}
-            <h2>Detail </h2>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleChangeFileDetail}
-              multiple
-            />
-            {fileDetail && (
-              <img
-                src={URL.createObjectURL(fileDetail)}
-                width={200}
-                height={200}
-              />
-            )}
+
             <Button
               onClick={handleUploadImage}
               className=" !hover:bg-blue-400 !bg-blue-600 !w-fit !px-4 ml-auto h-10 !text-white"

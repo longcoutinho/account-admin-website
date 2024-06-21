@@ -14,14 +14,16 @@ import {
 import React, { useState } from "react";
 import { Backend, HTTP_STATUS } from "@/constants";
 import { requestDelCard } from "@/services/buy-card";
-import { Delete, Edit, Visibility } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import FormProduct from "./Form";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
 import { IProductRes } from "@/interfaces/response/product";
 import DetailEditProduct from "./DetailEditProduct";
+import { fetchDetailProduct } from "@/redux/slices/product";
 
 export default function ProductList() {
+  const dispatch = useDispatch<AppDispatch>();
   const { product } = useSelector((state: RootState) => state.product);
   const [openEdit, setOpenEdit] = useState(false);
   const [open, setOpen] = useState(false);
@@ -35,6 +37,7 @@ export default function ProductList() {
   const idDel = openDel ? "del-popover" : undefined;
 
   const handleOpenEdit = (item: IProductRes) => {
+    dispatch(fetchDetailProduct(item?.id));
     setOpenEdit(true);
     setItemSelected(item);
   };
@@ -101,12 +104,6 @@ export default function ProductList() {
                     <Button
                       className="bg-transparent mr-4"
                       onClick={() => handleOpenEdit(row)}
-                    >
-                      <Visibility />
-                    </Button>
-                    <Button
-                      className="bg-transparent mr-4"
-                      // onClick={() => handleOpenEdit(row)}
                     >
                       <Edit />
                     </Button>

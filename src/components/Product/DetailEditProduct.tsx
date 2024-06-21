@@ -1,17 +1,9 @@
-import {
-  Box,
-  Button,
-  Chip,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Chip, Modal, TextField, Typography } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import { styleModal } from "../user/UserAccounts";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { useEffect, useMemo, useState } from "react";
 import { IPaymentMethodRes, IProductRes } from "@/interfaces/response/product";
 import {
   requestCreateProduct,
@@ -19,7 +11,7 @@ import {
 } from "@/services/product";
 import { HTTP_STATUS } from "@/constants";
 import { IProductReq } from "@/interfaces/request/product";
-import { fetchDetailProduct } from "@/redux/slices/product";
+import TextEditor from "../Editor";
 
 interface IProps {
   open: boolean;
@@ -28,8 +20,6 @@ interface IProps {
 }
 
 const DetailEditProduct = ({ open, onClose, product }: IProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { category } = useSelector((state: RootState) => state.typeProduct);
   const { productDetail } = useSelector((state: RootState) => state.product);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [inputCate, setInputCate] = useState("");
@@ -41,40 +31,53 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
   }>({});
+  const [des, setDes] = useState<string>("");
 
-  useEffect(() => {
-    if (product?.id) {
-      dispatch(fetchDetailProduct(product?.id));
-    }
-  }, [product]);
-  console.log(productDetail);
+  const defaultValues = useMemo(
+    () => ({
+      name: productDetail ? productDetail?.name : "",
+      description: productDetail ? productDetail?.description : "",
+      price: productDetail?.feeList?.map((e) => {
+        return { paymentCode: e?.paymentCode, price: e?.price };
+      }),
+      category: productDetail?.categoryList?.map((e) => e?.id?.toString()),
+    }),
+    [productDetail, open]
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     control,
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: defaultValues,
+  });
 
-  const { fields, append } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: "price",
   });
+  useEffect(() => {
+    if (productDetail?.description) {
+      setDes(productDetail?.description);
+    }
+  }, [productDetail]);
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
+  useEffect(() => {
+    if (productDetail && productDetail?.categoryList) {
+      setListCategory(productDetail?.categoryList?.map((e) => e?.name));
+    }
+  }, [productDetail]);
 
   useEffect(() => {
     renderListPaymentMethod();
   }, []);
-  useEffect(() => {
-    appendListPrice();
-  }, [listPaymentMethod]);
 
-  const appendListPrice = () => {
-    if (listPaymentMethod && listPaymentMethod?.length > 0) {
-      listPaymentMethod?.map((e) =>
-        append({ paymentCode: e.code, price: undefined })
-      );
-    }
-  };
   const renderListPaymentMethod = async () => {
     try {
       const res = await requestGetListPaymentMethod();
@@ -121,7 +124,10 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={styleModal} className="flex gap-4 w-[600px] flex-col">
+      <Box
+        sx={styleModal}
+        className="flex gap-4 w-[600px] flex-col overflow-auto max-h-screen"
+      >
         <Typography
           id="modal-modal-title"
           variant="h5"
@@ -137,12 +143,15 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
           <div className="flex flex-col gap-3">
             <TextField {...register("name", { required: true })} label="Name" />
             {errors.name && <p>Name is required.</p>}
-            <TextField
-              {...register("description", { required: true })}
-              label="Short description"
-            />
+            <Box>
+              <TextEditor
+                value={des}
+                onChange={(e: any) => setDes(e)}
+                label="Description"
+              />
+            </Box>
             {errors.description && <p>Short description is required.</p>}
-            <TextField
+            {/* <TextField
               id="outlined-select-currency"
               select
               label="Danh mục"
@@ -157,7 +166,7 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
                   </MenuItem>
                 ))}
             </TextField>
-            {errors.typeId && <p>Type is required.</p>}
+            {errors.typeId && <p>Type is required.</p>} */}
             <div className="w-full flex justify-between items-center">
               <TextField
                 label="Category (VD: size S)"
@@ -183,7 +192,6 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
                   />
                 ))}
             </div>
-
             <h2>Price</h2>
             {fields.map((field, index) => (
               <div key={field.id} className="w-full flex gap-4">
@@ -211,7 +219,6 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
                 />
               </div>
             ))}
-
             <TextField type="submit" />
           </div>
         </form>
