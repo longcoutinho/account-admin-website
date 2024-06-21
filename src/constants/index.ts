@@ -2,8 +2,8 @@ import { Course } from "@/interfaces/response";
 import { PATH_PAGE } from "@/routes/path";
 
 export enum Backend {
-  // BASE_URL = "https://elitagame.online",
-  BASE_URL = "http://42.114.157.222:8989",
+  BASE_URL = "https://elitagame.online",
+  // BASE_URL = "http://42.114.157.222:8989",
   // BASE_URL = 'http://localhost:8989',
   USER_SERVICE = BASE_URL + "/user",
   ITEM_SERVICE = BASE_URL + "/item",
