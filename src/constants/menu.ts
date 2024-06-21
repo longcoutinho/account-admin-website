@@ -23,12 +23,12 @@ export const menuBar = [
   {
     title: "Lords mobile",
     icon: faGamepad,
-    url: "/user/account-user",
+    url: "/lord-mobile",
   },
   {
     title: "Castle cash",
     icon: faGamepad,
-    url: "/user/account-user",
+    url: "/castle-cash",
   },
   // {
   //   title: "Quản lý khách hàng",
