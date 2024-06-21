@@ -67,6 +67,7 @@
     "@types/numeral": "^2.0.2",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-lazy-load-image-component": "^1.5.2",
+    "@types/redux-persist": "^4.3.1",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
     "prettier": "2.8.7",

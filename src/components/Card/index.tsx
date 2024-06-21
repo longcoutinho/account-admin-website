@@ -80,7 +80,7 @@ export default function ListCard() {
   return (
     <Box className="flex flex-row flex-wrap gap-10 p-10 justify-items-center">
       <Button
-        className=" hover:bg-blue-400 bg-blue-600 !min-w-32 w-fit ml-auto h-10 text-white"
+        className=" !hover:bg-blue-400 !bg-blue-600 !min-w-32 w-fit ml-auto h-10 !text-white"
         onClick={handleAddCard}
       >
         Thêm thẻ mới
