@@ -155,7 +155,10 @@ const FormProduct = ({ open, onClose }: IProps) => {
   };
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={styleModal} className="flex gap-4 w-[600px] flex-col">
+      <Box
+        sx={styleModal}
+        className="!flex !gap-4 !w-[600px] !flex-col !overflow-auto !max-h-screen"
+      >
         <Typography
           id="modal-modal-title"
           variant="h5"
