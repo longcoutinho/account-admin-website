@@ -55,8 +55,10 @@ const FormProduct = ({ open, onClose }: IProps) => {
     formState: { errors },
     setValue,
     control,
+    watch,
   } = useForm();
 
+  const values = watch();
   const { fields, append } = useFieldArray({
     control,
     name: "price",
@@ -86,18 +88,37 @@ const FormProduct = ({ open, onClose }: IProps) => {
       console.log(e);
     }
   };
-  const onSubmitForm = async (data: IProductReq) => {
+
+  const doneStep1 = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    setActiveStep(1);
+  };
+  const onSubmitForm = async () => {
+    const data = values;
     try {
       if (data) {
         const newReq = { ...data, description: des };
         const res: any = await requestCreateProduct(newReq as IProductReq);
         console.log(res);
         if (res?.status === HTTP_STATUS.OK) {
-          const newCompleted = completed;
-          newCompleted[activeStep] = true;
-          setCompleted(newCompleted);
-          setActiveStep(1);
           setProdId(res?.data?.id);
+          if (res?.data?.id && file) {
+            const body = new FormData();
+            file?.map((e) => body.append("imagesList", e as any));
+            const resImage = await requestCreateImageProduct(
+              res?.data?.id,
+              body
+            );
+            if (resImage?.status === HTTP_STATUS.OK) {
+              onClose();
+              toast.success("Thành công");
+              dispatch(fetchListProduct());
+            } else {
+              toast.error("Không thành công");
+            }
+          }
         }
       }
     } catch (e) {
@@ -134,25 +155,6 @@ const FormProduct = ({ open, onClose }: IProps) => {
     };
   }, [previewUrls]);
 
-  const handleUploadImage = async () => {
-    try {
-      if (prodId && file) {
-        const body = new FormData();
-        file?.map((e) => body.append("imagesList", e as any));
-        const res = await requestCreateImageProduct(prodId, body);
-        if (res?.status === HTTP_STATUS.OK) {
-          onClose();
-          toast.success("Thành công");
-          dispatch(fetchListProduct());
-        } else {
-          toast.error("Không thành công");
-        }
-        console.log(res);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -175,9 +177,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
           ))}
         </Stepper>
         {activeStep === 0 ? (
-          <form
-            onSubmit={handleSubmit((data) => onSubmitForm(data as IProductReq))}
-          >
+          <form onSubmit={handleSubmit(doneStep1)}>
             <div className="flex flex-col gap-3">
               <TextField
                 {...register("name", { required: true })}
@@ -294,7 +294,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
             )}
 
             <Button
-              onClick={handleUploadImage}
+              onClick={onSubmitForm}
               className=" !hover:bg-blue-400 !bg-blue-600 !w-fit !px-4 ml-auto h-10 !text-white"
             >
               Upload
