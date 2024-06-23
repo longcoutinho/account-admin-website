@@ -35,6 +35,7 @@ const steps = ["Thông tin", "Ảnh sản phẩm"];
 const FormProduct = ({ open, onClose }: IProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { category } = useSelector((state: RootState) => state.typeProduct);
+  const { paymentMethods } = useSelector((state: RootState) => state.payment);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [inputCate, setInputCate] = useState("");
   const [file, setFile] = useState<File[]>([]);
@@ -237,7 +238,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
 
               <h2>Price</h2>
               {fields.map((field, index) => (
-                <div key={field.id} className="w-full flex gap-4">
+                <div key={field.id} className="w-full flex flex-col gap-4">
                   {/* <Checkbox
                   checked={
                     values?.price?.filter(
@@ -249,16 +250,29 @@ const FormProduct = ({ open, onClose }: IProps) => {
                     setValue("price", [...values?.price, {}]);
                   }}
                 /> */}
-                  <TextField
-                    {...register(`price.${index}.paymentCode`)}
-                    className="w-1/2"
-                  />
-                  <TextField
-                    label="Price"
-                    type="number"
-                    className="w-1/2"
-                    {...register(`price.${index}.price`)}
-                  />
+                  <p>
+                    {paymentMethods &&
+                    paymentMethods?.find(
+                      (p) => p.code === (field as any)?.paymentCode
+                    )
+                      ? paymentMethods?.find(
+                          (p) => p.code === (field as any)?.paymentCode
+                        )?.name
+                      : (field as any)?.paymentCode}
+                  </p>
+                  <div className="flex gap-3">
+                    <TextField
+                      {...register(`price.${index}.paymentCode`)}
+                      className="w-1/2"
+                      disabled
+                    />
+                    <TextField
+                      label="Price"
+                      type="number"
+                      className="w-1/2"
+                      {...register(`price.${index}.price`)}
+                    />
+                  </div>
                 </div>
               ))}
 
