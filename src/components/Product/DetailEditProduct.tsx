@@ -131,7 +131,7 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
     <Modal open={open} onClose={onClose}>
       <Box
         sx={styleModal}
-        className="!flex !gap-4 !w-[600px] !flex-col !overflow-auto !max-h-screen"
+        className="!flex !gap-4 !w-[900px] !flex-col !overflow-auto !max-h-screen !max-w-screen"
       >
         <Typography
           id="modal-modal-title"

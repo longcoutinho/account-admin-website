@@ -28,6 +28,12 @@ export const requestCreateProduct = async (body: IProductReq): Promise<any> => {
   return doPostRequest(url, request);
 };
 
+export const requestDeleteProduct = async (productId: number): Promise<any> => {
+  const url = Backend.BASE_URL + `/product/remove/${productId}`;
+
+  return doPostRequest(url, null);
+};
+
 export const requestCreateImageProduct = async (
   productId: string | number,
   imagesList: FormData

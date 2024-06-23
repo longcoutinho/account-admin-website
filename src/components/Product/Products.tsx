@@ -13,14 +13,15 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Backend, HTTP_STATUS } from "@/constants";
-import { requestDelCard } from "@/services/buy-card";
 import { Delete, Edit } from "@mui/icons-material";
 import FormProduct from "./Form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { IProductRes } from "@/interfaces/response/product";
 import DetailEditProduct from "./DetailEditProduct";
-import { fetchDetailProduct } from "@/redux/slices/product";
+import { fetchDetailProduct, fetchListProduct } from "@/redux/slices/product";
+import { requestDeleteProduct } from "@/services/product";
+import { toast } from "react-toastify";
 
 export default function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,14 +59,15 @@ export default function ProductList() {
 
   const handleConfirmDelete = async () => {
     try {
-      console.log(1);
-      const res = await requestDelCard(idDelete?.toString());
+      const res = await requestDeleteProduct(Number(idDelete));
       if (res?.status === HTTP_STATUS.OK) {
-        // setRefetch(!refetch);
+        toast.success("Thành công");
+        dispatch(fetchListProduct());
+        setAnchorElDel(null);
       }
     } catch {}
   };
-  console.log(product);
+
   return (
     <Box className="flex flex-row flex-wrap gap-10 justify-items-center">
       <Button
@@ -110,7 +112,7 @@ export default function ProductList() {
                     <Button
                       aria-describedby={idDel}
                       className="bg-transparent"
-                      // onClick={(e) => handleClickDel(e, row?.id)}
+                      onClick={(e) => handleClickDel(e, row?.id)}
                     >
                       <Delete />
                     </Button>
