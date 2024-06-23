@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { fetchCategory } from "@/redux/slices/typeProduct";
 import { fetchListProduct } from "@/redux/slices/product";
+import { fetchListPaymentMethod } from "@/redux/slices/payment";
 
 export default function ListProduct() {
   const [tabValue, setTabValue] = useState("1");
@@ -21,6 +22,7 @@ export default function ListProduct() {
     try {
       dispatch(fetchCategory());
       dispatch(fetchListProduct());
+      dispatch(fetchListPaymentMethod());
     } catch (e) {
       console.log(e);
     }

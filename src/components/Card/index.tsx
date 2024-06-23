@@ -70,7 +70,6 @@ export default function ListCard() {
 
   const handleConfirmDelete = async () => {
     try {
-      console.log(1);
       const res = await requestDelCard(idDelete?.toString());
       if (res?.status === HTTP_STATUS.OK) {
         setRefetch(!refetch);
