@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Chip,
   MenuItem,
   Modal,
@@ -160,7 +161,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
     <Modal open={open} onClose={onClose}>
       <Box
         sx={styleModal}
-        className="!flex !gap-4 !w-[600px] !flex-col !overflow-auto !max-h-screen"
+        className="!flex !gap-4 !w-[900px] !flex-col !overflow-auto !max-h-screen"
       >
         <Typography
           id="modal-modal-title"
@@ -225,56 +226,77 @@ const FormProduct = ({ open, onClose }: IProps) => {
                   Add
                 </Button>
               </div>
-              <div className="flex gap-1">
+              <div className="flex flex-col gap-1">
                 {listCategory &&
                   listCategory?.map((e) => (
-                    <Chip
-                      label={e}
-                      onDelete={() => handleDeleteCate(e)}
-                      className="w-fit"
-                    />
+                    <>
+                      <Chip
+                        label={e}
+                        onDelete={() => handleDeleteCate(e)}
+                        className="w-fit"
+                      />
+                      {fields.map((field, index) => (
+                        <div
+                          key={field.id}
+                          className="w-full flex flex-col gap-4"
+                        >
+                          <div className="flex gap-2">
+                            <div className="flex items-center w-1/4 ">
+                              <Checkbox
+                              // checked={
+                              //   values?.price?.filter(
+                              //     (el: IPriceWithPaymentMethod) =>
+                              //       el?.paymentCode === e?.code
+                              //   )?.length > 0
+                              // }
+                              // onChange={(e) => {
+                              //   setValue("price", [...values?.price, {}]);
+                              // }}
+                              />
+                              <p>
+                                {paymentMethods &&
+                                paymentMethods?.find(
+                                  (p) => p.code === (field as any)?.paymentCode
+                                )
+                                  ? paymentMethods?.find(
+                                      (p) =>
+                                        p.code === (field as any)?.paymentCode
+                                    )?.name
+                                  : (field as any)?.paymentCode}
+                              </p>
+                            </div>
+                            <TextField
+                              {...register(`price.${index}.paymentCode`)}
+                              className="hidden"
+                              disabled
+                            />
+                            <TextField
+                              label="Price"
+                              type="number"
+                              className="w-1/2"
+                              {...register(`price.${index}.price`)}
+                            />
+                            <TextField
+                              id="outlined-select-currency"
+                              select
+                              label="Currency"
+                              className="w-1/4"
+                              placeholder="Select currency"
+                              {...register("typeId", { required: true })}
+                            >
+                              {category &&
+                                category?.map((item) => (
+                                  <MenuItem value={item.id} key={item.id}>
+                                    {item.name}
+                                  </MenuItem>
+                                ))}
+                            </TextField>
+                          </div>
+                        </div>
+                      ))}
+                    </>
                   ))}
               </div>
-
-              <h2>Price</h2>
-              {fields.map((field, index) => (
-                <div key={field.id} className="w-full flex flex-col gap-4">
-                  {/* <Checkbox
-                  checked={
-                    values?.price?.filter(
-                      (el: IPriceWithPaymentMethod) =>
-                        el?.paymentCode === e?.code
-                    )?.length > 0
-                  }
-                  onChange={(e) => {
-                    setValue("price", [...values?.price, {}]);
-                  }}
-                /> */}
-                  <p>
-                    {paymentMethods &&
-                    paymentMethods?.find(
-                      (p) => p.code === (field as any)?.paymentCode
-                    )
-                      ? paymentMethods?.find(
-                          (p) => p.code === (field as any)?.paymentCode
-                        )?.name
-                      : (field as any)?.paymentCode}
-                  </p>
-                  <div className="flex gap-3">
-                    <TextField
-                      {...register(`price.${index}.paymentCode`)}
-                      className="w-1/2"
-                      disabled
-                    />
-                    <TextField
-                      label="Price"
-                      type="number"
-                      className="w-1/2"
-                      {...register(`price.${index}.price`)}
-                    />
-                  </div>
-                </div>
-              ))}
 
               <TextField type="submit" />
             </div>
