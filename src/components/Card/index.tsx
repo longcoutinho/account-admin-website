@@ -15,23 +15,27 @@ import {
 import React, { useEffect, useState } from "react";
 import { ICardsRes } from "@/interfaces/response";
 import { HTTP_STATUS } from "@/constants";
-import { requestDelCard, requestGetListCards } from "@/services/buy-card";
+import { requestDelCard } from "@/services/buy-card";
 import { Delete, Edit } from "@mui/icons-material";
 import Items from "./Item";
 import { styleModal } from "../user/UserAccounts";
 import FormEditCard from "./FormEditCard";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchListCard } from "@/redux/slices/card";
 
 export default function ListCard() {
+  const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const [idDelete, setIdDelete] = useState<number>();
   const [itemSelected, setItemSelected] = useState<ICardsRes>();
-  const [listCards, setListCards] = useState<ICardsRes[]>([]);
   const [refetch, setRefetch] = useState(false);
   const [anchorElDel, setAnchorElDel] = useState<HTMLButtonElement | null>(
     null
   );
+  const { listCards } = useSelector((state: RootState) => state.card);
   const openDel = Boolean(anchorElDel);
   const idDel = openDel ? "del-popover" : undefined;
 
@@ -41,10 +45,7 @@ export default function ListCard() {
 
   const renderListCards = async () => {
     try {
-      const res = await requestGetListCards();
-      if (res?.status === HTTP_STATUS.OK) {
-        setListCards(res?.data);
-      }
+      dispatch(fetchListCard());
     } catch (e) {
       console.log(e);
     }

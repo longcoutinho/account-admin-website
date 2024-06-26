@@ -66,13 +66,12 @@ export interface ITopUpList {
 
 export interface ISaleOrderList {
   id: string;
-  userId: string;
-  itemName: string;
-  createDate: string;
-  listSaleOrder: ISaleOrderItem[];
+  request: string;
   price: number;
-  totalAmount: number;
-  totalRequest: number;
+  createUser: string;
+  createDate: string;
+  status: string;
+  msgError: string;
 }
 
 export interface TopUpRequest {
