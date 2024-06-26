@@ -38,7 +38,7 @@ export default function SaleOrderStats() {
       username: username != "" ? username : null,
       status: 1,
     };
-    getAllSaleOrder(params)
+    getAllSaleOrder()
       .then((res) => {
         if (res.status == HTTP_STATUS.OK) {
           setList(res.data.listSaleOrder);

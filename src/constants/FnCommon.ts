@@ -3,7 +3,7 @@ import { ItemToCart } from "@/interfaces/response";
 import { NextRouter } from "next/router";
 import { User } from "@/interfaces";
 import dayjs from "dayjs";
-import {DATE_TIME_FORMAT} from "@/constants/index";
+import { DATE_TIME_FORMAT } from "@/constants/index";
 
 const insertStringAtIndex = (ind: number, str1: string, str2: string) => {
   let stringResult = "";
@@ -16,8 +16,8 @@ export const formatVND = (num: number, ignore: boolean) => {
   if (num === null) {
     return "0đ";
   }
-  let str = num.toString();
-  for (let i = str.length - 3; i > 0; i -= 3) {
+  let str = num?.toString();
+  for (let i = str?.length - 3; i > 0; i -= 3) {
     str = insertStringAtIndex(i, str, ".");
   }
   if (!ignore) str += "đ";
@@ -206,4 +206,4 @@ export const getDisplayMenu = (): number[] => {
 
 export const formatDateTime = (date: string): string => {
   return dayjs(date).format(DATE_TIME_FORMAT);
-}
+};
