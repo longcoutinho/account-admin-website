@@ -32,7 +32,7 @@ import { fetchListCard } from "@/redux/slices/card";
 
 export default function SaleOrderStats() {
   const dispatch = useDispatch<AppDispatch>();
-  const pageSize = 15;
+  const pageSize = 10;
   const [list, setList] = useState<ISaleOrderList[]>([]);
   const [totalRequest, setTotalRequest] = useState(0);
   const [page, setPage] = React.useState(1);
@@ -179,7 +179,7 @@ export default function SaleOrderStats() {
         <p className="text-blue-500">Số luợt mua hàng: {totalRequest}</p>
       </Box>
       <Pagination
-        count={pageSize}
+        count={Math.ceil(list?.length / pageSize)}
         page={page}
         onChange={handleChange}
         className="custom-pagination"
