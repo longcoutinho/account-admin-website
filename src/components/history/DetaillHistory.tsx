@@ -12,7 +12,8 @@ interface IProps {
 
 const DetailTransaction = ({ open, onClose, transaction }: IProps) => {
   const { listCards } = useSelector((state: RootState) => state.card);
-
+  const { detailTrans } = useSelector((state: RootState) => state.transaction);
+  console.log(detailTrans);
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={styleModal} className="flex gap-4 w-[600px] flex-col">

@@ -80,6 +80,18 @@ export interface ISaleOrderDetail {
   msgError: string;
 }
 
+export interface IOrderDetail {
+  cardItemId: string;
+  cardName: string;
+  cards: {
+    code: string;
+    serial: string;
+    vendor: string;
+    value: number;
+    expiry: string;
+  }[];
+}
+
 export interface TopUpRequest {
   transId: string | null;
   username: string | null;
