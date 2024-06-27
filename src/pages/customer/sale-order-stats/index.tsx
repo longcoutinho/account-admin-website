@@ -31,6 +31,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchListCard } from "@/redux/slices/card";
 import { fetchListTransaction } from "@/redux/slices/transaction";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 const STATUS_TRANSACTION = ["ALL", "SUCCESS", "FAILED"];
 export default function SaleOrderStats() {
@@ -46,6 +50,8 @@ export default function SaleOrderStats() {
   const [userName, setUserName] = useState("");
   const [status, setStatus] = useState("");
   const [transId, setTransId] = useState("");
+  const [fromDate, setFromDate] = React.useState<Dayjs | null>(null);
+  const [toDate, setToDate] = React.useState<Dayjs | null>(null);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -57,7 +63,7 @@ export default function SaleOrderStats() {
 
   useEffect(() => {
     renderListTransaction();
-  }, [userName, page, status, transId]);
+  }, [userName, page, status, transId, toDate, fromDate]);
 
   const renderListCards = async () => {
     try {
@@ -75,6 +81,12 @@ export default function SaleOrderStats() {
           ...(userName !== "" && { username: userName }),
           ...(status !== "" && { status: status }),
           ...(transId !== "" && { transId: transId }),
+          ...(fromDate !== null && {
+            fromDate: fromDate?.format("DD-MM-YYYY"),
+          }),
+          ...(toDate !== null && {
+            toDate: toDate?.format("DD-MM-YYYY"),
+          }),
         })
       );
     } catch (e) {
@@ -111,11 +123,29 @@ export default function SaleOrderStats() {
       setStatus(event.target.value as string);
     }
   };
-
+  const handleReset = () => {
+    setUserName("");
+    setStatus("All");
+    setTransId("");
+    setFromDate(null);
+    setToDate(null);
+  };
   return (
     <Page title={PAGE_TITLE.HOME} menuIndex={1}>
       <Box className="flex flex-row items-center bg-white rounded-2xl p-5 box-shadow flex-wrap gap-3">
         <div className="w-full flex justify-end gap-2">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="From date"
+              value={fromDate}
+              onChange={(newValue) => setFromDate(newValue)}
+            />
+            <DatePicker
+              label="To date"
+              value={toDate}
+              onChange={(newValue) => setToDate(newValue)}
+            />
+          </LocalizationProvider>
           <TextField
             id="outlined-select-currency"
             select
@@ -148,6 +178,12 @@ export default function SaleOrderStats() {
             endAdornment={<Search />}
           />
         </div>
+        <p
+          className=" cursor-pointer text-red-500 p-1 border border-red-400"
+          onClick={handleReset}
+        >
+          Reset
+        </p>
         {listTransaction &&
         listTransaction?.count &&
         listTransaction?.count > 0 ? (
