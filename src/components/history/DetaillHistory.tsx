@@ -1,13 +1,13 @@
 import { Box, Button, Chip, Modal, TextField, Typography } from "@mui/material";
 import { styleModal } from "../user/UserAccounts";
-import { ISaleOrderList } from "@/interfaces/request";
+import { ISaleOrderDetail } from "@/interfaces/request";
 import { formatDateTime, formatVND } from "@/constants/FnCommon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 interface IProps {
   open: boolean;
   onClose: () => void;
-  transaction?: ISaleOrderList;
+  transaction?: ISaleOrderDetail;
 }
 
 const DetailTransaction = ({ open, onClose, transaction }: IProps) => {

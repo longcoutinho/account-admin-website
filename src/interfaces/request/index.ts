@@ -65,7 +65,13 @@ export interface ITopUpList {
 }
 
 export interface ISaleOrderList {
+  count: number;
+  totalRevenue: number;
+  listData: ISaleOrderDetail[];
+}
+export interface ISaleOrderDetail {
   id: string;
+  ip: string;
   request: string;
   price: number;
   createUser: string;
