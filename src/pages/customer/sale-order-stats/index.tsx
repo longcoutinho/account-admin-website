@@ -30,7 +30,10 @@ import DetailTransaction from "@/components/history/DetaillHistory";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchListCard } from "@/redux/slices/card";
-import { fetchListTransaction } from "@/redux/slices/transaction";
+import {
+  fetchDetailTransaction,
+  fetchListTransaction,
+} from "@/redux/slices/transaction";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -63,7 +66,7 @@ export default function SaleOrderStats() {
 
   useEffect(() => {
     renderListTransaction();
-  }, [userName, page, status, transId, toDate, fromDate]);
+  }, [page, status, toDate, fromDate]);
 
   const renderListCards = async () => {
     try {
@@ -103,16 +106,25 @@ export default function SaleOrderStats() {
   const handleViewDetail = (row: ISaleOrderDetail) => {
     setDetailTransaction(row);
     setOpenModalDetail(true);
+    dispatch(fetchDetailTransaction(row?.id));
   };
 
-  const handleSearchUser = (e: any) => {
-    setUserName(e.target.value);
-    setPage(1);
-  };
-
-  const handleSearchTransId = (e: any) => {
-    setTransId(e.target.value);
-    setPage(1);
+  const handleSearch = () => {
+    dispatch(
+      fetchListTransaction({
+        page: 0,
+        pageSize: pageSize,
+        ...(userName !== "" && { username: userName }),
+        ...(status !== "" && { status: status }),
+        ...(transId !== "" && { transId: transId }),
+        ...(fromDate !== null && {
+          fromDate: fromDate?.format("DD-MM-YYYY"),
+        }),
+        ...(toDate !== null && {
+          toDate: toDate?.format("DD-MM-YYYY"),
+        }),
+      })
+    );
   };
 
   const handleChangeStatus = (event: any) => {
@@ -125,7 +137,7 @@ export default function SaleOrderStats() {
   };
   const handleReset = () => {
     setUserName("");
-    setStatus("All");
+    setStatus("");
     setTransId("");
     setFromDate(null);
     setToDate(null);
@@ -139,18 +151,20 @@ export default function SaleOrderStats() {
               label="From date"
               value={fromDate}
               onChange={(newValue) => setFromDate(newValue)}
+              className="w-1/3"
             />
             <DatePicker
               label="To date"
               value={toDate}
               onChange={(newValue) => setToDate(newValue)}
+              className="w-1/3"
             />
           </LocalizationProvider>
           <TextField
             id="outlined-select-currency"
             select
             label="Trạng thái"
-            className="mb-4 border border-gray-500 w-72 rounded-md"
+            className="mb-4 border border-gray-500 w-1/3 rounded-md"
             placeholder="chọn danh mục"
             onChange={handleChangeStatus}
           >
@@ -161,29 +175,47 @@ export default function SaleOrderStats() {
                 </MenuItem>
               ))}
           </TextField>
+        </div>
+        <div className="w-full flex justify-end gap-2">
           <Input
             placeholder="Tìm kiếm người thực hiện"
             type="text"
-            className="mb-4 border border-gray-500 px-4 w-72 rounded-md"
-            onChange={handleSearchUser}
+            className="mb-4 border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer"
+            onChange={(e) => setUserName(e.target.value)}
+            onKeyDown={(ev) => {
+              if (ev.key === "Enter") {
+                // Do code here
+                ev.preventDefault();
+                handleSearch();
+              }
+            }}
             color="primary"
-            endAdornment={<Search />}
+            endAdornment={<Search onClick={handleSearch} />}
           />
           <Input
             placeholder="Tìm kiếm mã giao dịch"
             type="text"
-            className="mb-4 border border-gray-500 px-4 w-72 rounded-md"
-            onChange={handleSearchTransId}
+            className="mb-4 border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer"
+            onChange={(e) => setTransId(e.target.value)}
+            onKeyDown={(ev) => {
+              if (ev.key === "Enter") {
+                // Do code here
+                ev.preventDefault();
+                handleSearch();
+              }
+            }}
             color="primary"
-            endAdornment={<Search />}
+            endAdornment={<Search onClick={handleSearch} />}
           />
+          <div className="w-1/3">
+            <p
+              className=" cursor-pointer text-red-500 py-1 px-3 ml-8 border border-red-400 w-fit"
+              onClick={handleReset}
+            >
+              Reset
+            </p>
+          </div>
         </div>
-        <p
-          className=" cursor-pointer text-red-500 p-1 border border-red-400"
-          onClick={handleReset}
-        >
-          Reset
-        </p>
         {listTransaction &&
         listTransaction?.count &&
         listTransaction?.count > 0 ? (
