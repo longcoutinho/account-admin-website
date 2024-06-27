@@ -286,7 +286,7 @@ export default function SaleOrderStats() {
                       )}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {formatDateTime(row.createDate)}
+                      {row.createDate}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <Button
