@@ -1,4 +1,4 @@
-import { HTTP_STATUS, PAGE_TITLE } from "@/constants";
+import { PAGE_TITLE } from "@/constants";
 import Page from "@/layouts";
 import "@/constants/FnCommon";
 import React, { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { ISaleOrderDetail } from "@/interfaces/request";
-import { formatDateTime, formatVND } from "@/constants/FnCommon";
+import { formatVND } from "@/constants/FnCommon";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Iconify from "@/components/Iconify";
 import { formatId } from "@/utils/formatNumber";
@@ -35,9 +35,9 @@ import {
   fetchListTransaction,
 } from "@/redux/slices/transaction";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
+import ExportToCSVButton from "@/components/ExportToCsv";
 
 const STATUS_TRANSACTION = ["ALL", "SUCCESS", "FAILED"];
 export default function SaleOrderStats() {
@@ -66,7 +66,7 @@ export default function SaleOrderStats() {
 
   useEffect(() => {
     renderListTransaction();
-  }, [page, status, toDate, fromDate]);
+  }, [page]);
 
   const renderListCards = async () => {
     try {
@@ -128,7 +128,6 @@ export default function SaleOrderStats() {
   };
 
   const handleChangeStatus = (event: any) => {
-    setPage(1);
     if (event.target.value === "ALL") {
       setStatus("");
     } else {
@@ -167,6 +166,7 @@ export default function SaleOrderStats() {
             className="mb-4 border border-gray-500 w-1/3 rounded-md"
             placeholder="chọn danh mục"
             onChange={handleChangeStatus}
+            value={status === "" ? "All" : status}
           >
             {STATUS_TRANSACTION &&
               STATUS_TRANSACTION?.map((item) => (
@@ -180,36 +180,33 @@ export default function SaleOrderStats() {
           <Input
             placeholder="Tìm kiếm người thực hiện"
             type="text"
-            className="mb-4 border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer"
+            className=" border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer h-[53px]"
             onChange={(e) => setUserName(e.target.value)}
-            onKeyDown={(ev) => {
-              if (ev.key === "Enter") {
-                // Do code here
-                ev.preventDefault();
-                handleSearch();
-              }
-            }}
             color="primary"
-            endAdornment={<Search onClick={handleSearch} />}
+            endAdornment={<Search />}
           />
           <Input
             placeholder="Tìm kiếm mã giao dịch"
             type="text"
-            className="mb-4 border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer"
+            className=" border border-gray-500 px-4 w-1/3 rounded-md cursor-pointer h-[53px]"
             onChange={(e) => setTransId(e.target.value)}
-            onKeyDown={(ev) => {
-              if (ev.key === "Enter") {
-                // Do code here
-                ev.preventDefault();
-                handleSearch();
-              }
-            }}
             color="primary"
-            endAdornment={<Search onClick={handleSearch} />}
+            endAdornment={<Search />}
           />
-          <div className="w-1/3">
+          <div className="w-1/3 flex gap-2">
             <p
-              className=" cursor-pointer text-red-500 py-1 px-3 ml-8 border border-red-400 w-fit"
+              className=" cursor-pointer text-blue-500 py-1 px-3 border border-blue-400 w-1/3  h-[52px] text-center leading-[46px]"
+              onClick={handleSearch}
+            >
+              Tìm kiếm
+            </p>
+            <ExportToCSVButton
+              fileName="transaction"
+              jsonData={JSON.stringify(listTransaction?.listData)}
+              classname="w-1/3"
+            />
+            <p
+              className=" cursor-pointer text-red-500 py-1 px-3 border border-red-400 w-1/3  h-[52px] text-center leading-[46px]"
               onClick={handleReset}
             >
               Reset
