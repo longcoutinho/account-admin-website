@@ -160,7 +160,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
     <Modal open={open} onClose={onClose}>
       <Box
         sx={styleModal}
-        className="!flex !gap-4 !w-[600px] !flex-col !overflow-auto !max-h-screen"
+        className="!flex !gap-4 !w-[600px] !flex-col !overflow-auto !max-h-[calc(100vh-40px)]"
       >
         <Typography
           id="modal-modal-title"
