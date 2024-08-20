@@ -1,7 +1,6 @@
 import { Box, Button, Chip, Modal, TextField, Typography } from "@mui/material";
 import { styleModal } from "../user/UserAccounts";
 import { IOrderDetail, ISaleOrderDetail } from "@/interfaces/request";
-import { formatVND } from "@/constants/FnCommon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 interface IProps {
@@ -41,7 +40,11 @@ const DetailTransaction = ({ open, onClose, transaction }: IProps) => {
 
             {transaction?.price && (
               <TextField
-                value={formatVND(transaction?.price, false)}
+                value={
+                  transaction?.price?.toLocaleString("vi-VN") +
+                  " " +
+                  transaction?.currency
+                }
                 label="Số tiền"
                 disabled
               />
