@@ -78,6 +78,7 @@ export interface ISaleOrderDetail {
   createDate: string;
   status: string;
   msgError: string;
+  currency: string;
 }
 
 export interface IOrderDetail {

@@ -259,7 +259,9 @@ export default function SaleOrderStats() {
                       {row.ip}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {formatVND(row.price, false)}
+                      {row?.price?.toLocaleString("vi-VN") +
+                        " " +
+                        row?.currency}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row.status === "SUCCESS" ? (
