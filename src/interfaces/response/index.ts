@@ -30,7 +30,7 @@ export interface ICardsRes {
 
 export interface IItemCardRes {
   id: number;
-  price: number;
+  name: string;
   cardId: number;
   code: string;
 }

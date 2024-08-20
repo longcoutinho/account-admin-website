@@ -23,6 +23,8 @@ import { HTTP_STATUS } from "@/constants";
 import { Delete, Edit } from "@mui/icons-material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FormEditCard from "./FormEditCard";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface IProps {
   openEdit: boolean;
@@ -51,6 +53,7 @@ export default function Items({
   const [file, setFile] = useState<string>(
     itemSelected?.image ? itemSelected?.image : ""
   );
+  const { paymentMethods } = useSelector((state: RootState) => state.payment);
 
   useEffect(() => {
     handleGetListItemCard();
@@ -69,7 +72,7 @@ export default function Items({
   const handleOpenEditPrice = (item: IItemCardRes) => {
     setOpen(true);
     setItem(item);
-    setPrice(item?.price);
+    // setPrice(item?.price);
   };
   const handleClickDel = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -102,7 +105,7 @@ export default function Items({
       console.log(res);
     } catch {}
   };
-
+  console.log(listItems);
   return (
     <>
       <Modal
@@ -130,7 +133,7 @@ export default function Items({
                   aria-label="secondary tabs example"
                 >
                   <Tab label="Chỉnh sửa thẻ" value="1" />
-                  <Tab label="Sửa mệnh giá" value="2" />
+                  <Tab label="Mệnh giá" value="2" />
                 </TabList>
               </Box>
               <TabPanel value="1" className="flex gap-4 flex-col">
@@ -147,7 +150,7 @@ export default function Items({
                       <TableRow>
                         <TableCell>Id</TableCell>
                         <TableCell>Code</TableCell>
-                        <TableCell>Price</TableCell>
+                        <TableCell>Name</TableCell>
                         <TableCell>Delete</TableCell>
                       </TableRow>
                     </TableHead>
@@ -161,19 +164,15 @@ export default function Items({
                         >
                           <TableCell>{row.id}</TableCell>
                           <TableCell>{row.code}</TableCell>
-                          <TableCell onClick={() => handleOpenEditPrice(row)}>
-                            {row.price.toLocaleString("en-US")}đ{" "}
-                            <Edit
-                              sx={{
-                                width: "14px",
-                                height: "14px",
-                                marginBottom: "4px",
-                                marginLeft: "4px",
-                                cursor: "pointer",
-                              }}
-                            />
-                          </TableCell>
+                          <TableCell>{row?.name}</TableCell>
                           <TableCell>
+                            <Button
+                              aria-describedby={idDel}
+                              className="bg-transparent mr-2"
+                              onClick={() => handleOpenEditPrice(row)}
+                            >
+                              <Edit />
+                            </Button>
                             <Button
                               aria-describedby={idDel}
                               className="bg-transparent"
@@ -199,24 +198,32 @@ export default function Items({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleModal} className="flex gap-4 flex-col">
+          <Box sx={styleModal} className="flex gap-4 flex-col w-[700px]">
             <Typography
               id="modal-modal-title"
               variant="h5"
               component="h2"
               className="text-center font-semibold"
             >
-              Mệnh giá: {item?.price.toLocaleString("en-US")}đ
+              Mệnh giá: {item?.name}
             </Typography>
-
-            <TextField
-              type="number"
-              label="Nhập mệnh giá mới"
-              //   className="w-full"
-              value={price}
-              placeholder="Nhập mệnh giá"
-              onChange={(e) => setPrice(Number(e.target.value))}
-            />
+            {paymentMethods &&
+              paymentMethods?.map((e) => (
+                <div className=" flex gap-3 w-full">
+                  <TextField
+                    label={e?.name}
+                    defaultValue={e?.code}
+                    value={e?.code}
+                    disabled
+                    className="w-1/2"
+                  />
+                  <TextField
+                    label={"Price"}
+                    value={e?.code}
+                    className="w-1/2"
+                  />
+                </div>
+              ))}
             <Box className="flex gap-5 px-10 mt-4">
               <Button
                 className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
