@@ -25,6 +25,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FormEditCard from "./FormEditCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useFieldArray, useForm } from "react-hook-form";
 
 interface IProps {
   openEdit: boolean;
@@ -54,10 +55,28 @@ export default function Items({
     itemSelected?.image ? itemSelected?.image : ""
   );
   const { paymentMethods } = useSelector((state: RootState) => state.payment);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    control,
+    watch,
+  } = useForm();
+
+  const values = watch();
+  const { fields, append } = useFieldArray({
+    control,
+    name: "price",
+  });
 
   useEffect(() => {
     handleGetListItemCard();
   }, [itemSelected, openEdit]);
+
+  useEffect(() => {
+    appendListPrice();
+  }, [paymentMethods]);
 
   const handleGetListItemCard = async () => {
     try {
@@ -69,6 +88,19 @@ export default function Items({
       console.log(e);
     }
   };
+
+  const appendListPrice = () => {
+    if (
+      paymentMethods &&
+      paymentMethods?.length > 0 &&
+      fields?.length < paymentMethods?.length
+    ) {
+      paymentMethods?.map((e) =>
+        append({ currency: e.currency, price: undefined })
+      );
+    }
+  };
+
   const handleOpenEditPrice = (item: IItemCardRes) => {
     setOpen(true);
     setItem(item);
@@ -105,7 +137,15 @@ export default function Items({
       console.log(res);
     } catch {}
   };
-  console.log(listItems);
+
+  const confirmPrice = async () => {
+    try {
+      console.log(values);
+      // const res = await requestAddPriceFee();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <Modal
@@ -114,7 +154,10 @@ export default function Items({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={styleModal} className="flex gap-4 flex-col w-[800px] h-fit">
+        <Box
+          sx={styleModal}
+          className="flex gap-4 flex-col !w-[80dvw] !max-h-[80dvh] !h-fit !overflow-y-auto"
+        >
           <Typography
             id="modal-modal-title"
             variant="h5"
@@ -198,7 +241,10 @@ export default function Items({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleModal} className="flex gap-4 flex-col w-[700px]">
+          <Box
+            sx={styleModal}
+            className="flex gap-4 flex-col !w-[50dvw] !max-h-[80dvh] !h-fit !overflow-y-auto"
+          >
             <Typography
               id="modal-modal-title"
               variant="h5"
@@ -207,40 +253,52 @@ export default function Items({
             >
               Mệnh giá: {item?.name}
             </Typography>
-            {paymentMethods &&
-              paymentMethods?.map((e) => (
-                <div className=" flex gap-3 w-full">
-                  <TextField
-                    label={e?.name}
-                    defaultValue={e?.code}
-                    value={e?.code}
-                    disabled
-                    className="w-1/2"
-                  />
-                  <TextField
-                    label={"Price"}
-                    value={e?.code}
-                    className="w-1/2"
-                  />
+            <form onSubmit={handleSubmit(confirmPrice)}>
+              {fields.map((field, index) => (
+                <div key={field.id} className="w-full flex flex-col gap-4 mb-4">
+                  <div className="flex gap-3">
+                    <TextField
+                      {...register(`price.${index}.currency`)}
+                      label={
+                        paymentMethods &&
+                        paymentMethods?.find(
+                          (p) => p.currency === (field as any)?.currency
+                        )
+                          ? paymentMethods?.find(
+                              (p) => p.currency === (field as any)?.currency
+                            )?.name
+                          : (field as any)?.currency
+                      }
+                      className="w-1/2"
+                      disabled
+                    />
+                    <TextField
+                      label="Price"
+                      type="number"
+                      className="w-1/2"
+                      {...register(`price.${index}.price`)}
+                    />
+                  </div>
                 </div>
               ))}
-            <Box className="flex gap-5 px-10 mt-4">
-              <Button
-                className=" hover:bg-blue-400 bg-blue-600 !min-w-32 h-10 text-white"
-                // onClick={() => handleConfirm(row.id)}
-              >
-                {/* {loading && (
+              <Box className="flex gap-5 px-10 mt-4 items-center justify-center">
+                <Button
+                  className=" !hover:bg-blue-400 !bg-blue-600 !min-w-32 !h-10 !text-white"
+                  type="submit"
+                >
+                  {/* {loading && (
               <CircularProgress size={20} color="inherit" className="mr-2" />
             )} */}
-                Xác nhận
-              </Button>
-              <Button
-                className="hover:bg-gray-400 bg-gray-600  w-32 h-10 text-white"
-                onClick={() => setOpen(false)}
-              >
-                Hủy
-              </Button>
-            </Box>
+                  Xác nhận
+                </Button>
+                <Button
+                  className="!hover:bg-gray-400 !bg-gray-600  !w-32 !h-10 !text-white"
+                  onClick={() => setOpen(false)}
+                >
+                  Hủy
+                </Button>
+              </Box>
+            </form>
           </Box>
         </Modal>
       )}

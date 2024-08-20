@@ -144,7 +144,10 @@ export default function ListCard() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleModal} className="flex gap-4 flex-col">
+          <Box
+            sx={styleModal}
+            className="flex gap-4 flex-col !w-[50dvw] !max-h-[80dvh] !h-fit !overflow-y-auto"
+          >
             <Typography
               id="modal-modal-title"
               variant="h5"
