@@ -76,3 +76,17 @@ export interface ResponseUser {
   userId: string;
   email: string;
 }
+
+export interface IPriceItem {
+  id: number;
+  cardId: number;
+  name: string;
+  listFees: IFee[];
+}
+export interface IFee {
+  id: number;
+  cardItemId: number;
+  paymentMethodCode: string;
+  currency?: string;
+  price: number;
+}

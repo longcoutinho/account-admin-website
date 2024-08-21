@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Modal,
   Paper,
   Popover,
@@ -17,8 +16,12 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { styleModal } from "@/components/user/UserAccounts";
-import { ICardsRes, IItemCardRes } from "@/interfaces/response";
-import { requestEditCard, requestGetItemCard } from "@/services/buy-card";
+import { ICardsRes, IItemCardRes, IPriceItem } from "@/interfaces/response";
+import {
+  requestAddPriceFee,
+  requestEditCard,
+  requestGetItemCard,
+} from "@/services/buy-card";
 import { HTTP_STATUS } from "@/constants";
 import { Delete, Edit } from "@mui/icons-material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -26,6 +29,7 @@ import FormEditCard from "./FormEditCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useFieldArray, useForm } from "react-hook-form";
+import { getItemById } from "@/services/item";
 
 interface IProps {
   openEdit: boolean;
@@ -42,7 +46,7 @@ export default function Items({
 }: IProps) {
   const [listItems, setListItems] = useState<IItemCardRes[]>([]);
   const [item, setItem] = useState<IItemCardRes>();
-  const [price, setPrice] = useState<number>();
+  const [itemCard, setItemCard] = useState<IPriceItem>();
   const [open, setOpen] = useState(false);
   const [anchorElDel, setAnchorElDel] = useState<HTMLButtonElement | null>(
     null
@@ -59,9 +63,9 @@ export default function Items({
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     control,
     watch,
+    reset,
   } = useForm();
 
   const values = watch();
@@ -75,8 +79,9 @@ export default function Items({
   }, [itemSelected, openEdit]);
 
   useEffect(() => {
+    if (!open) reset({ price: [] });
     appendListPrice();
-  }, [paymentMethods]);
+  }, [itemCard, open, reset]);
 
   const handleGetListItemCard = async () => {
     try {
@@ -91,20 +96,36 @@ export default function Items({
 
   const appendListPrice = () => {
     if (
+      open &&
+      itemCard &&
+      itemCard?.listFees?.length > 0 &&
       paymentMethods &&
       paymentMethods?.length > 0 &&
       fields?.length < paymentMethods?.length
     ) {
       paymentMethods?.map((e) =>
-        append({ currency: e.currency, price: undefined })
+        append({
+          currency: e.currency,
+          price: itemCard?.listFees?.find((it) => it?.currency === e?.currency)
+            ? itemCard?.listFees?.find((it) => it?.currency === e?.currency)
+                ?.price
+            : undefined,
+        })
       );
     }
   };
 
-  const handleOpenEditPrice = (item: IItemCardRes) => {
-    setOpen(true);
+  const handleOpenEditPrice = async (item: IItemCardRes) => {
     setItem(item);
-    // setPrice(item?.price);
+    try {
+      const res = await getItemById(item?.id);
+      if (res?.status === HTTP_STATUS.OK) {
+        setOpen(true);
+        setItemCard(res?.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   const handleClickDel = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -140,8 +161,13 @@ export default function Items({
 
   const confirmPrice = async () => {
     try {
-      console.log(values);
-      // const res = await requestAddPriceFee();
+      const res = await requestAddPriceFee({
+        cardItemId: item?.id,
+        data: values?.price,
+      });
+      if (res?.status === HTTP_STATUS.OK) {
+        setOpen(false);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -276,7 +302,7 @@ export default function Items({
                       label="Price"
                       type="number"
                       className="w-1/2"
-                      {...register(`price.${index}.price`)}
+                      {...register(`price.${index}.price`, { required: true })}
                     />
                   </div>
                 </div>
