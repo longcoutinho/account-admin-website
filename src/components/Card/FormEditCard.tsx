@@ -72,7 +72,7 @@ export default function FormEditCard({
         {file && <img src={file} width={200} height={200} />}
       </div> */}
       <Button
-        className=" hover:bg-blue-400 bg-blue-600 !min-w-32 w-fit mx-auto h-10 text-white"
+        className=" !hover:bg-blue-400 !bg-blue-600 !min-w-32 !w-fit !mx-auto !h-10 !text-white"
         onClick={handleEditCard}
       >
         {/* {loading && (

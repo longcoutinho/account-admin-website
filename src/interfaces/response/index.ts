@@ -30,7 +30,7 @@ export interface ICardsRes {
 
 export interface IItemCardRes {
   id: number;
-  price: number;
+  name: string;
   cardId: number;
   code: string;
 }
@@ -75,4 +75,18 @@ export interface ResponseUser {
   createDate: string;
   userId: string;
   email: string;
+}
+
+export interface IPriceItem {
+  id: number;
+  cardId: number;
+  name: string;
+  listFees: IFee[];
+}
+export interface IFee {
+  id: number;
+  cardItemId: number;
+  paymentMethodCode: string;
+  currency?: string;
+  price: number;
 }

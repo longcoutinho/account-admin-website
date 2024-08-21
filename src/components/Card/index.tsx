@@ -23,6 +23,7 @@ import FormEditCard from "./FormEditCard";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchListCard } from "@/redux/slices/card";
+import { fetchListPaymentMethod } from "@/redux/slices/payment";
 
 export default function ListCard() {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +47,7 @@ export default function ListCard() {
   const renderListCards = async () => {
     try {
       dispatch(fetchListCard());
+      dispatch(fetchListPaymentMethod());
     } catch (e) {
       console.log(e);
     }
@@ -142,7 +144,10 @@ export default function ListCard() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleModal} className="flex gap-4 flex-col">
+          <Box
+            sx={styleModal}
+            className="flex gap-4 flex-col !w-[50dvw] !max-h-[80dvh] !h-fit !overflow-y-auto"
+          >
             <Typography
               id="modal-modal-title"
               variant="h5"

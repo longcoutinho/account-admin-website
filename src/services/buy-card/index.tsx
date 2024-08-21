@@ -47,3 +47,15 @@ export const requestCreateCard = async ({
   };
   return doPostRequest(url, request);
 };
+
+export const requestAddPriceFee = async ({
+  cardItemId,
+  data,
+}: {
+  cardItemId?: number;
+  data?: { price: number; currency: string }[];
+}): Promise<any> => {
+  const url = Backend.BASE_URL + `/card/item/fee/${cardItemId}`;
+  const request = { data: data };
+  return doPostRequest(url, request);
+};
