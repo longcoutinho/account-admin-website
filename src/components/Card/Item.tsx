@@ -98,7 +98,6 @@ export default function Items({
     if (
       open &&
       itemCard &&
-      itemCard?.listFees?.length > 0 &&
       paymentMethods &&
       paymentMethods?.length > 0 &&
       fields?.length < paymentMethods?.length
