@@ -26,6 +26,7 @@ import { IProductReq } from "@/interfaces/request/product";
 import { toast } from "react-toastify";
 import { fetchListProduct } from "@/redux/slices/product";
 import TextEditor from "../Editor";
+import { LoadingButton } from "@mui/lab";
 
 interface IProps {
   open: boolean;
@@ -49,6 +50,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
   }>({});
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -97,6 +99,7 @@ const FormProduct = ({ open, onClose }: IProps) => {
     setActiveStep(1);
   };
   const onSubmitForm = async () => {
+    setLoading(true);
     const data = values;
     try {
       if (data) {
@@ -122,7 +125,9 @@ const FormProduct = ({ open, onClose }: IProps) => {
           }
         }
       }
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       console.log(e);
     }
   };
@@ -307,12 +312,14 @@ const FormProduct = ({ open, onClose }: IProps) => {
               </Box>
             )}
 
-            <Button
+            <LoadingButton
+              loading={loading}
+              loadingPosition="start"
               onClick={onSubmitForm}
-              className=" !hover:bg-blue-400 !bg-blue-600 !w-fit !px-4 ml-auto h-10 !text-white"
+              className=" !hover:bg-blue-400 !bg-blue-600 !w-fit !px-8 ml-auto h-10 !text-white"
             >
               Upload
-            </Button>
+            </LoadingButton>
           </>
         )}
       </Box>
