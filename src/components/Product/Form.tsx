@@ -39,8 +39,10 @@ const FormProduct = ({ open, onClose }: IProps) => {
   const { paymentMethods } = useSelector((state: RootState) => state.payment);
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [inputCate, setInputCate] = useState("");
+  const [icon, setIcon] = useState<File>();
   const [file, setFile] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [previewIcon, setPreviewIcon] = useState<string>("");
   const [listPaymentMethod, setListPaymentMethod] = useState<
     IPaymentMethodRes[]
   >([]);
@@ -109,7 +111,8 @@ const FormProduct = ({ open, onClose }: IProps) => {
           setProdId(res?.data?.id);
           if (res?.data?.id && file) {
             const body = new FormData();
-            file?.map((e) => body.append("imagesList", e as any));
+            const arr = [...[icon], ...file];
+            arr?.map((e) => body.append("imagesList", e as any));
             const resImage = await requestCreateImageProduct(
               res?.data?.id,
               body
@@ -153,6 +156,13 @@ const FormProduct = ({ open, onClose }: IProps) => {
 
     const urls = files.map((file) => URL.createObjectURL(file));
     setPreviewUrls(urls);
+  };
+
+  const handleChangeFileIcon = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setIcon(files[0]);
+    const url = URL.createObjectURL(files[0]);
+    setPreviewIcon(url);
   };
   useEffect(() => {
     return () => {
@@ -285,7 +295,28 @@ const FormProduct = ({ open, onClose }: IProps) => {
           </form>
         ) : (
           <>
-            <h2>Add list image </h2>
+            <h2>Add icon image </h2>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleChangeFileIcon}
+            />
+            {previewIcon && (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                <Box
+                  component="img"
+                  src={previewIcon}
+                  alt={`Preview icon`}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    objectFit: "cover",
+                    borderRadius: 1,
+                  }}
+                />
+              </Box>
+            )}
+            <h2>Add list images detail</h2>
             <input
               type="file"
               accept="image/*"
