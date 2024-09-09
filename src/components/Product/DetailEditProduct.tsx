@@ -20,7 +20,9 @@ interface IProps {
 }
 
 const DetailEditProduct = ({ open, onClose, product }: IProps) => {
-  const { productDetail } = useSelector((state: RootState) => state.product);
+  const { productDetail, loading } = useSelector(
+    (state: RootState) => state.product
+  );
   const [listCategory, setListCategory] = useState<string[]>([]);
   const [inputCate, setInputCate] = useState("");
   const [listPaymentMethod, setListPaymentMethod] = useState<
@@ -62,22 +64,24 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
     name: "price",
   });
   useEffect(() => {
-    if (productDetail?.description) {
+    if (productDetail?.description && !loading) {
       setDes(productDetail?.description);
     }
-  }, [productDetail]);
+  }, [productDetail, loading]);
   useEffect(() => {
     reset(defaultValues);
   }, [defaultValues, reset]);
 
   useEffect(() => {
-    if (productDetail && productDetail?.categoryList) {
-      setListCategory(productDetail?.categoryList?.map((e) => e?.name));
+    if (!loading) {
+      if (productDetail && productDetail?.categoryList) {
+        setListCategory(productDetail?.categoryList?.map((e) => e?.name));
+      }
+      if (productDetail && productDetail?.imagePathList) {
+        setPreviewUrls(productDetail?.imagePathList);
+      }
     }
-    if (productDetail && productDetail?.imagePathList) {
-      setPreviewUrls(productDetail?.imagePathList);
-    }
-  }, [productDetail]);
+  }, [productDetail, loading]);
 
   useEffect(() => {
     renderListPaymentMethod();
@@ -176,8 +180,9 @@ const DetailEditProduct = ({ open, onClose, product }: IProps) => {
               <TextField
                 label="Category (VD: size S)"
                 className="w-[calc(100%-70px)]"
-                {...register("category")}
+                // {...register("category")}
                 value={inputCate}
+                autoComplete="off"
                 onChange={(e) => setInputCate(e?.target?.value)}
               />
               <Button

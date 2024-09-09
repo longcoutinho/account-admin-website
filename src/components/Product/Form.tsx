@@ -105,7 +105,6 @@ const FormProduct = ({ open, onClose }: IProps) => {
       if (data) {
         const newReq = { ...data, description: des };
         const res: any = await requestCreateProduct(newReq as IProductReq);
-        console.log(res);
         if (res?.status === HTTP_STATUS.OK) {
           setProdId(res?.data?.id);
           if (res?.data?.id && file) {
