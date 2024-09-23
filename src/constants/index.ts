@@ -3,7 +3,7 @@ import { PATH_PAGE } from "@/routes/path";
 
 export enum Backend {
   BASE_URL = "https://elitagame.online",
-  // BASE_URL = "http://42.114.157.124:8989",
+  // BASE_URL = "http://183.80.22.21:8989",
   // BASE_URL = 'http://localhost:8989',
   USER_SERVICE = BASE_URL + "/user",
   ITEM_SERVICE = BASE_URL + "/item",
@@ -220,3 +220,11 @@ export const MenuTitle: any = [
 ];
 
 export const DATE_TIME_FORMAT = "HH:mm:ss DD-MM-YYYY";
+export enum STATUS_ORDER {
+  PENDING = 0,
+  RECEIVED = 1,
+  PROCESSING = 2,
+  TRANSPORT = 3,
+  SUCCESS = 4,
+  FAILED = 5,
+}

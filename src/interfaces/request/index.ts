@@ -76,9 +76,15 @@ export interface ISaleOrderDetail {
   price: number;
   createUser: string;
   createDate: string;
-  status: string;
+  status: string | number;
   msgError: string;
   currency: string;
+  productName?: string;
+  categoriesName?: string;
+  address?: string;
+  email?: string;
+  phoneNumber?: string;
+  imageList?: string[];
 }
 
 export interface IOrderDetail {
