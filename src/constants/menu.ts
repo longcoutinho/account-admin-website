@@ -26,6 +26,11 @@ export const menuBar = [
     url: "/customer/sale-order-stats",
   },
   {
+    title: "Lịch sử đơn hàng",
+    icon: faCartShopping,
+    url: "/customer/product-orders",
+  },
+  {
     title: "Lords mobile",
     icon: faGamepad,
     url: "/lord-mobile",
