@@ -62,7 +62,7 @@ export default function SaleOrderStats() {
     (state: RootState) => state.productOrders
   );
   const [userName, setUserName] = useState("");
-  const [status, setStatus] = useState(undefined);
+  const [status, setStatus] = useState("");
   const [transId, setTransId] = useState("");
   const [fromDate, setFromDate] = React.useState<Dayjs | null>(null);
   const [toDate, setToDate] = React.useState<Dayjs | null>(null);
@@ -82,7 +82,7 @@ export default function SaleOrderStats() {
           page: page - 1,
           pageSize: pageSize,
           ...(userName !== "" && { username: userName }),
-          ...(!isUndefined(status) && { status: status }),
+          ...(status !== "" && { status: status }),
           ...(transId !== "" && { transId: transId }),
           ...(fromDate !== null && {
             fromDate: fromDate?.format("DD-MM-YYYY"),
@@ -114,7 +114,7 @@ export default function SaleOrderStats() {
         page: 0,
         pageSize: pageSize,
         ...(userName !== "" && { username: userName }),
-        ...(!isUndefined(status) && { status: status }),
+        ...(status !== "" && { status: status }),
         ...(transId !== "" && { transId: transId }),
         ...(fromDate !== null && {
           fromDate: fromDate?.format("DD-MM-YYYY"),
@@ -129,7 +129,7 @@ export default function SaleOrderStats() {
   const handleChangeStatus = (event: any) => {
     console.log(event.target.value);
     if (event.target.value === "ALL") {
-      setStatus(undefined);
+      setStatus("");
     } else {
       setStatus(event.target.value);
     }
@@ -150,7 +150,7 @@ export default function SaleOrderStats() {
   };
   const handleReset = () => {
     setUserName("");
-    setStatus(undefined);
+    setStatus("");
     setTransId("");
     setFromDate(null);
     setToDate(null);
@@ -181,7 +181,7 @@ export default function SaleOrderStats() {
             className="mb-4 border border-gray-500 w-1/3 rounded-md"
             placeholder="chọn danh mục"
             onChange={handleChangeStatus}
-            value={isUndefined(status) ? "All" : status}
+            value={status === "" ? "All" : status}
           >
             {STATUS_TRANSACTION &&
               STATUS_TRANSACTION?.map((item) => (
