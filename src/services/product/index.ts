@@ -2,6 +2,25 @@ import { Backend } from "@/constants";
 import { doGetRequest, doPostRequest } from "@/constants/FnCommon";
 import { IProductReq } from "@/interfaces/request/product";
 
+export const deleteBanner = async (id: number): Promise<any> => {
+  const url = Backend.BASE_URL + `/product/home-page/images/delete/${id}`;
+  return doPostRequest(url, null);
+};
+
+export const addBanner = async (
+  index: number,
+  imagesList: FormData
+): Promise<any> => {
+  const url = Backend.BASE_URL + `/product/home-page/images/${index}`;
+  const request = imagesList;
+  return doPostRequest(url, request);
+};
+
+export const getListBanner = async (): Promise<any> => {
+  const url = Backend.BASE_URL + "/product/home-page/images";
+  return doGetRequest(url, null);
+};
+
 export const getListCategory = async (): Promise<any> => {
   const url = Backend.BASE_URL + "/product-type";
 

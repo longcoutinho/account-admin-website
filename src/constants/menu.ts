@@ -6,6 +6,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 export const menuBar = [
   {
+    title: "Quản lý banner",
+    icon: faCartShopping,
+    url: "/banner",
+  },
+  {
     title: "Quản lý thẻ nạp",
     icon: faCartShopping,
     url: "/card",
