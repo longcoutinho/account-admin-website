@@ -20,7 +20,7 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { ISaleOrderDetail } from "@/interfaces/request";
+import { ISaleOrderDetail, ISaleOrderList } from "@/interfaces/request";
 import { formatVND } from "@/constants/FnCommon";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Iconify from "@/components/Iconify";
@@ -38,6 +38,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import ExportToCSVButton from "@/components/ExportToCsv";
+import { getAllSaleOrder } from "@/services/sale-order";
 
 const STATUS_TRANSACTION = ["ALL", "SUCCESS", "FAILED"];
 export default function SaleOrderStats() {
@@ -51,6 +52,8 @@ export default function SaleOrderStats() {
     (state: RootState) => state.transaction
   );
   const [userName, setUserName] = useState("");
+  const [listTransactionFull, setListTransactionFull] =
+    useState<ISaleOrderList[]>();
   const [status, setStatus] = useState("");
   const [transId, setTransId] = useState("");
   const [fromDate, setFromDate] = React.useState<Dayjs | null>(null);
@@ -92,6 +95,13 @@ export default function SaleOrderStats() {
           }),
         })
       );
+      const res = await getAllSaleOrder({
+        page: 0,
+        pageSize: 99999,
+      });
+      if (res?.status === 200) {
+        setListTransactionFull(res?.data?.listData);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -202,7 +212,7 @@ export default function SaleOrderStats() {
             </p>
             <ExportToCSVButton
               fileName="transaction"
-              jsonData={JSON.stringify(listTransaction?.listData)}
+              jsonData={JSON.stringify(listTransactionFull)}
               classname="w-1/3"
             />
             <p
